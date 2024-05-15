@@ -25,6 +25,7 @@ public class AsyncNetworkServer {
 
     private ConnectionPool connectionPool;
 
+
     public AsyncNetworkServer() {
         try {
             serverSocketChannel = ServerSocketChannel.open();
@@ -48,6 +49,58 @@ public class AsyncNetworkServer {
         }
     }
 
+    private void workOnRequest(Iterator<SelectionKey> keyIterator) throws IOException {
+        while (keyIterator.hasNext()) {
+            SelectionKey key = keyIterator.next();
+            keyIterator.remove();
+
+            if (key.isAcceptable()) {
+                serverSocketChannelForClientConnection = (ServerSocketChannel) key.channel();
+
+                socketChannelForClient = serverSocketChannelForClientConnection.accept();
+
+                socketChannelForClient.setOption(StandardSocketOptions.TCP_NODELAY, true);
+
+                socketChannelForClient.configureBlocking(false);
+                socketChannelForClient.register(selector, SelectionKey.OP_READ);
+
+                System.out.println("\nNew client connected: " + socketChannelForClient.socket().getRemoteSocketAddress());
+
+                socketChannelForClient.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+//                        socketChannelForClient.setOption(StandardSocketOptions.SO_LINGER, 0);        // avoid
+            } else if (key.isReadable()) {
+                SocketChannel clientChannel = (SocketChannel) key.channel();
+
+                ByteBuffer buffer = ByteBuffer.allocateDirect(1024 * 1024);
+
+                int bytesRead = clientChannel.read(buffer);
+
+                if (bytesRead == -1) {
+                    clientChannel.close();
+                    System.out.println("\nClient disconnected");
+                    key.cancel();
+                    continue;
+                }
+
+                buffer.flip();
+                String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
+                System.out.println("Received request: " + requestData);
+
+                String response = "HTTP/1.1 200 OK\r\n"
+                        + "Content-Type: text/plain\r\n"
+                        + "Connection: keep-alive\r\n"
+                        + "\r\n"
+                        + "Hello from the server!\r\n";
+
+                clientChannel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
+
+//                        key.cancel();
+                buffer.clear();
+//                        clientChannel.close();
+            }
+        }
+    }
+
     public void runServer() {
         try  {
             while (true) {
@@ -58,58 +111,9 @@ public class AsyncNetworkServer {
                 }
 
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
-
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
 
-                while (keyIterator.hasNext()) {
-                    SelectionKey key = keyIterator.next();
-                    keyIterator.remove();
-
-                    if (key.isAcceptable()) {
-                        serverSocketChannelForClientConnection = (ServerSocketChannel) key.channel();
-
-                        socketChannelForClient = serverSocketChannelForClientConnection.accept();
-
-                        socketChannelForClient.setOption(StandardSocketOptions.TCP_NODELAY, true);
-
-                        socketChannelForClient.configureBlocking(false);
-                        socketChannelForClient.register(selector, SelectionKey.OP_READ);
-
-                        System.out.println("\nNew client connected: " + socketChannelForClient.socket().getRemoteSocketAddress());
-
-                        socketChannelForClient.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
-//                        socketChannelForClient.setOption(StandardSocketOptions.SO_LINGER, 0);        // avoid
-                    } else if (key.isReadable()) {
-                        SocketChannel clientChannel = (SocketChannel) key.channel();
-
-                        ByteBuffer buffer = ByteBuffer.allocateDirect(1024 * 1024);
-
-                        int bytesRead = clientChannel.read(buffer);
-
-                        if (bytesRead == -1) {
-                            clientChannel.close();
-                            System.out.println("\nClient disconnected");
-                            key.cancel();
-                            continue;
-                        }
-
-                        buffer.flip();
-                        String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
-                        System.out.println("Received request: " + requestData);
-
-                        String response = "HTTP/1.1 200 OK\r\n"
-                                + "Content-Type: text/plain\r\n"
-                                + "Connection: keep-alive\r\n"
-                                + "\r\n"
-                                + "Hello from the server!\r\n";
-
-                        clientChannel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
-
-//                        key.cancel();
-                        buffer.clear();
-//                        clientChannel.close();
-                    }
-                }
+                workOnRequest(keyIterator);
             }
 
         } catch (IOException e) {
