@@ -25,7 +25,6 @@ public class AsyncNetworkServer {
 
     private ConnectionPool connectionPool;
 
-
     public AsyncNetworkServer() {
         try {
             serverSocketChannel = ServerSocketChannel.open();
@@ -41,10 +40,10 @@ public class AsyncNetworkServer {
             serverSocketChannelKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
 //            connectionPool = new ConnectionPool(512, "localhost", 8080);
-            System.out.println("Server started on port 8080");
+            System.out.println(" Server started on port 8080...");
 
         } catch (IOException e) {
-            System.out.printf("%nERROR: Issues in the init phase of the web server: %s", e.getMessage());
+            System.out.printf("%n\033[31m ERROR: Issues in the init phase of the web server: %s\033[0m", e.getMessage());
             System.exit(1);
         }
     }
@@ -64,7 +63,7 @@ public class AsyncNetworkServer {
                 socketChannelForClient.configureBlocking(false);
                 socketChannelForClient.register(selector, SelectionKey.OP_READ);
 
-                System.out.println("\nNew client connected: " + socketChannelForClient.socket().getRemoteSocketAddress());
+                System.out.println("\n New client connected: " + socketChannelForClient.socket().getRemoteSocketAddress());
 
                 socketChannelForClient.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 //                        socketChannelForClient.setOption(StandardSocketOptions.SO_LINGER, 0);        // avoid
@@ -77,26 +76,28 @@ public class AsyncNetworkServer {
 
                 if (bytesRead == -1) {
                     clientChannel.close();
-                    System.out.println("\nClient disconnected");
+                    System.out.println("\n Client disconnected");
                     key.cancel();
                     continue;
                 }
 
                 buffer.flip();
                 String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
-                System.out.println("Received request: " + requestData);
+                System.out.println(" Received request: " + requestData);
 
-                String response = "HTTP/1.1 200 OK\r\n"
-                        + "Content-Type: text/plain\r\n"
-                        + "Connection: keep-alive\r\n"
-                        + "\r\n"
-                        + "Hello from the server!\r\n";
+                StringBuilder answer = new StringBuilder();
 
-                clientChannel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
+                answer.append("HTTP/1.1 200 OK\r\n")
+                        .append("Content-Type: text/plain\r\n")
+                        .append("Connection: keep-alive\r\n")
+                        .append("\r\n")
+                        .append(" Hello from the server!\r\n");
 
-//                        key.cancel();
+                clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
+
+//                key.cancel();
                 buffer.clear();
-//                        clientChannel.close();
+//                clientChannel.close();
             }
         }
     }
@@ -117,7 +118,7 @@ public class AsyncNetworkServer {
             }
 
         } catch (IOException e) {
-            System.out.printf("%nERROR: Issues with handling the web connections: %s", e.getMessage());
+            System.out.printf("%n \033[31mERROR: Issues with handling the web connections: %s\033[0m%n", e.getMessage());
         } finally {
             closeResources();
         }
@@ -132,9 +133,8 @@ public class AsyncNetworkServer {
             if (serverSocketChannel != null) {
                 serverSocketChannel.close();
             }
-
         } catch (IOException e) {
-            System.err.println("ERROR: Failed to close resources: " + e.getMessage());
+            System.err.printf("%n \033[31mERROR: Failed to close resources: %s\033[0m", e.getMessage());
         }
     }
 }

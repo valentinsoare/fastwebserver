@@ -52,17 +52,6 @@
     ]
   },
   {
-    "name": "io.valentinsoare.fastweb.helpers.ConnectionPool",
-    "queryAllPublicMethods": true,
-    "queryAllDeclaredMethods": true,
-    "queriedMethods": [
-      {
-        "name": "<init>",
-        "parameterTypes": [ ]
-      }
-    ]
-  },
-  {
     "name": "io.valentinsoare.fastweb.runner.ApplicationRunner",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
@@ -77,6 +66,17 @@
   },
   {
     "name": "io.valentinsoare.fastweb.services.AsyncNetworkServer",
+    "queryAllPublicMethods": true,
+    "queryAllDeclaredMethods": true,
+    "queriedMethods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [ ]
+      }
+    ]
+  },
+  {
+    "name": "io.valentinsoare.fastweb.services.ConnectionPool",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "queriedMethods": [
