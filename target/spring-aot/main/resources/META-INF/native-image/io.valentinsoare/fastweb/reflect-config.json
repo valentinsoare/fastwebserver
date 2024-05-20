@@ -15,7 +15,7 @@
     "allPublicConstructors": true
   },
   {
-    "name": "io.valentinsoare.fastweb.FastWebApplication",
+    "name": "io.valentinsoare.fastwebserver.FastWebApplication",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "allPublicMethods": true,
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "name": "io.valentinsoare.fastweb.FastWebApplication$$SpringCGLIB$$0",
+    "name": "io.valentinsoare.fastwebserver.FastWebApplication$$SpringCGLIB$$0",
     "allDeclaredFields": true,
     "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
@@ -40,9 +40,9 @@
     ]
   },
   {
-    "name": "io.valentinsoare.fastweb.FastWebApplication__ApplicationContextInitializer",
+    "name": "io.valentinsoare.fastwebserver.FastWebApplication__ApplicationContextInitializer",
     "condition": {
-      "typeReachable": "io.valentinsoare.fastweb.FastWebApplication"
+      "typeReachable": "io.valentinsoare.fastwebserver.FastWebApplication"
     },
     "methods": [
       {
@@ -52,20 +52,20 @@
     ]
   },
   {
-    "name": "io.valentinsoare.fastweb.runner.ApplicationRunner",
+    "name": "io.valentinsoare.fastwebserver.runner.ApplicationRunner",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "queriedMethods": [
       {
         "name": "<init>",
         "parameterTypes": [
-          "io.valentinsoare.fastweb.services.AsyncNetworkServer"
+          "io.valentinsoare.fastwebserver.services.AsyncNetworkServer"
         ]
       }
     ]
   },
   {
-    "name": "io.valentinsoare.fastweb.services.AsyncNetworkServer",
+    "name": "io.valentinsoare.fastwebserver.services.AsyncNetworkServer",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "queriedMethods": [
@@ -76,7 +76,7 @@
     ]
   },
   {
-    "name": "io.valentinsoare.fastweb.services.ConnectionPool",
+    "name": "io.valentinsoare.fastwebserver.services.ConnectionPool",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "queriedMethods": [
