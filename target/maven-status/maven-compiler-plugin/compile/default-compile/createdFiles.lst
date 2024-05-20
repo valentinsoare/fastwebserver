@@ -1,4 +1,3 @@
 io/valentinsoare/fastwebserver/runner/ApplicationRunner.class
-io/valentinsoare/fastwebserver/services/ConnectionPool.class
 io/valentinsoare/fastwebserver/services/AsyncNetworkServer.class
 io/valentinsoare/fastwebserver/FastWebApplication.class

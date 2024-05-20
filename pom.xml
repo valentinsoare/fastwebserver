@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.valentinsoare</groupId>
-    <artifactId>fastweb</artifactId>
+    <artifactId>fastwebserver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>fastwebserver</name>
     <description>fastwebserver</description>
