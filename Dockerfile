@@ -28,13 +28,13 @@ RUN ln -sf /dev/stdout /home/fastwebserver/server.logs \
 EXPOSE 8080
 
 # Create a volume 'webserver-storage' mounted at '/home/fastwebserver'
-VOLUME webserver-storage:/home/fastwebserver
+VOLUME fastwebserver-storage:/home/fastwebserver
 
 # Set the working directory in the container to '/home/fastwebserver'
 WORKDIR /home/fastwebserver/
 
 # Copy the 'fastwebserver' directory from the host to the current location ('/home/fastwebserver') in the container
-COPY target/fastwebserver .
+COPY target/fastwebserver target/fastwebserver-runner.sh ./
 
 # Set the command to be executed when the container starts. It runs the 'fastwebserver-runner.sh' script and redirects its output to 'server.logs'
 CMD ["/home/fastwebserver/fastwebserver-runner.sh", ">", "server.logs", "2>&1"]
