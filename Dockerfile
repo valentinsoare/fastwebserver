@@ -14,8 +14,7 @@ LABEL maintainer="Valentin Soare <https://github.com/valentinsoare/fastwebserver
 RUN sed -i 's/# %wheel/%wheel/g' /etc/sudoers \
     && useradd -c 'fastwebserver user application' -m -s /bin/bash fastwebserver \
     && usermod -aG wheel fastwebserver \
-    && dnf install passwd \
-                   java-17-openjdk.x86_64 -y \
+    && dnf install passwd java-17-openjdk.x86_64 -y \
     && echo "default" | passwd fastwebserver --stdin \
     && chown -R fastwebserver:fastwebserver /home/fastwebserver \
     && chmod 750 /home/fastwebserver/
