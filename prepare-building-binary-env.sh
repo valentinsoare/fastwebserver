@@ -15,9 +15,7 @@ get_sdk_and_install_tools() {
   curl -s "https://get.sdkman.io" | bash
   source $HOME/.sdkman/bin/sdkman-init.sh
 
-  sdk install java 17.0.10-amzn
   sdk install java 22.3.r17-nik
-
   sdk use java 22.3.r17-nik
 }
 

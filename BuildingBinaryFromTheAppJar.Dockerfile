@@ -12,4 +12,6 @@ RUN mkdir /home/building-binary_environment \
 
 RUN chmod +x /home/building-binary_environment/fastwebserver/prepare-building-binary-env.sh
 
-RUN bash -c /home/building-binary_environment/fastwebserver/prepare-building-binary-env.sh
+WORKDIR /home/building-binary_environment/fastwebserver/
+
+CMD ["/bin/bash", "-c", "./prepare-building-binary-env.sh"]
