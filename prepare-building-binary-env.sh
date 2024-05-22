@@ -38,7 +38,7 @@ main() {
   prepare_where_to_build
   get_sdk_and_install_tools
   build_the_binary
-  checks_if_build_successfully
+  checks_if_build_successful
 }
 
 main

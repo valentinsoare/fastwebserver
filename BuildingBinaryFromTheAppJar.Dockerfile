@@ -9,3 +9,7 @@ RUN git config --global user.name "valentinsoare" \
 RUN mkdir /home/building-binary_environment \
     && cd /home/building-binary_environment \
     && git clone https://github.com/valentinsoare/fastwebserver
+
+RUN chmod +x /home/building-binary_environment/fastwebserver/prepare-building-binary-env.sh
+
+RUN bash -c /home/building-binary_environment/fastwebserver/prepare-building-binary-env.sh
