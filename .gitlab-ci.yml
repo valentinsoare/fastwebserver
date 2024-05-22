@@ -1,0 +1,10 @@
+stages:
+  - clone repo
+  - build app
+  - build docker image
+  - deploy the app
+
+build the binary image:
+  image: vsoare/fastwebserver:0.0.1
+  script:
+    - mvn clean -Pnative native:compile

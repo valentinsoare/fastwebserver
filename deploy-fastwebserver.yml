@@ -1,37 +1,22 @@
 name: "deployment"
 
-# Define the services for this deployment
 services:
-  # The name of the service
   fastwebserver:
-    # Build configuration for the Docker image
     build:
-      # The build context, i.e., the location of the Dockerfile and any files referenced in it
       context: .
-      # The path to the Dockerfile
       dockerfile: Dockerfile
-    # The Docker image to use for the service
     image: vsoare/fastwebserver:0.0.1
-    # The ports to expose from the container to the host
     ports:
       - "8080:8080"
-    # The networks the service is part of
     networks:
       - nw_fast
-    # The volumes to mount in the container
     volumes:
       - fastwebserver-storage:/home/fastwebserver
 
-# Define the networks for this deployment
 networks:
-  # The name of the network
   nw_fast:
-    # The actual name of the network
     name: nw_fast
 
-# Define the volumes for this deployment
 volumes:
-  # The name of the volume
   fastwebserver-storage:
-    # The actual name of the volume
     name: fastwebserver-storage
