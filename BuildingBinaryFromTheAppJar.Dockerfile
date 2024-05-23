@@ -1,7 +1,9 @@
 FROM fedora:39
 LABEL maintainer="Valentin Soare <https://github.com/valentinsoare/fastwebserver>"
 
-RUN dnf install unzip zip maven passwd gcc glibc-static libstdc++-static zlib-devel git -y
+RUN dnf install unzip zip maven gcc glibc-static libstdc++-static zlib-devel -y
+
+RUN dnf install git -y
 
 RUN git config --global user.name "valentinsoare" \
     && git config --global user.email "soarevalentinn@gmail.com"
@@ -14,4 +16,6 @@ RUN chmod +x /home/building-binary_environment/fastwebserver/prepare-building-bi
 
 WORKDIR /home/building-binary_environment/fastwebserver/
 
-CMD ["/bin/bash", "-c", "./prepare-building-binary-env.sh"]
+RUN ./prepare-building-binary-env.sh
+
+CMD ["/bin/bash"]
