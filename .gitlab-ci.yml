@@ -6,7 +6,7 @@ stages:
 
 clone application repository:
   stage: Clone
-  image: vvsoare/image-to-execute-pipeline:0.0.1
+  image: vsoare/image-to-execute-pipeline:0.0.1
   script:
     - cd /home/custom-application
     - git clone https://gitlab.com/vsoare/fastwebserver_with_cicd.git
