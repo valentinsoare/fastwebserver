@@ -44,7 +44,7 @@ build application image:
   script:
     - unset DOCKER_HOST
     - docker login --username vsoare --password valisoare_191987+
-    - cd workspace
+    - ls -latr
     - docker build -f ./build-docker-image-with-application-binary-image.DockerFile -t fastwebserver:0.0.1 .
     - docker image push fastwebserver:0.0.1
   artifacts:
