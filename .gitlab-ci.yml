@@ -23,10 +23,10 @@ test if cloning ok:
   stage: test_clone
   image: vsoare/image-to-execute-pipelines:0.0.1
   script:
-    - du -sh .
+    - printf "\033[31m -> project_size %s\033[0m" "$(du -sh .)"
     - if [[ ! -e ./src || ! -d ./src ]]; then
-        printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist!";
+        printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist. project was not cloned with success!";
         exit 1;
       fi
       
-      printf "\033[32m%s\033[0m\n" " - > src directory exists!";
+      printf "\033[32m%s\033[0m\n" " - > src directory exists. fastwebserver successfully cloned!";
