@@ -23,5 +23,7 @@ test if cloning ok:
   stage: test_clone
   script:
     - if [[ ! -e ./src || ! -d ./src ]]; then \
-        printf "\033[31m%s\033[0m\n" "src directory doesn't exists!" \
+        printf "\033[31m%s\033[0m\n" " - > src directory doesn't exists!" \
+        exit 1 \
       fi
+    - printf "\033[31m%s\033[0m\n" " - > project fastwebserver successfully cloned!"
