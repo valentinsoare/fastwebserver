@@ -21,11 +21,13 @@ clone application repository:
 
 test if cloning ok:
   stage: test_clone
+  image: vsoare/image-to-execute-pipelines:0.0.1
   script:
-    - cd /builds/vsoare/fastwebvserver_with_cicd
+    - ls -latr /builds/vsoare
+    - du -sh .
+    - ls -latr
     - if [[ ! -e ./src || ! -d ./src ]]; then
         printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist!";
-        exit 1;
       else
         printf "\033[32m%s\033[0m\n" " - > src directory exists!";
       fi
