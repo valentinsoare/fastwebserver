@@ -9,7 +9,7 @@ clone application repository:
   image: vsoare/image-to-execute-pipelines:0.0.1
   script:
     - cd /home/custom-application
-    - git clone https://github.com/valentinsoare/fastwebserver.git
+    - git clone https://gitlab.com/vsoare/fastwebserver_with_cicd.git
     - du -sh .
   artifacts:
       paths:
