@@ -8,4 +8,4 @@ clone application repository:
     - ls -latr
   artifacts:
       paths:
-        - ./public
+        - /builds/vsoare/fastwebserver_with_cicd
