@@ -6,8 +6,9 @@ stages:
 
 clone application repository:
   stage: Clone
-  image: vsoare/image-to-execute-pipeline:0.0.1
+  image: alpinelinux/alpine-gitlab-ci
   script:
+    - mkdir /home/custom-application
     - cd /home/custom-application
     - git clone https://gitlab.com/vsoare/fastwebserver_with_cicd.git
     - du -sh .
@@ -17,7 +18,7 @@ clone application repository:
 
 test if cloning successfully:
   stage: Test_Clone
-  image: vsoare/image-to-execute-pipeline:0.0.1
+  image: alpine:3.19
   script:
     - if [[ ! -e ./src || ! -d ./src ]]; then
         printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist. project was not cloned with success!";
@@ -34,5 +35,15 @@ build application binary from source code:
   stage: Build_Application_Binary
   image: vsoare/image-to-execute-pipeline:0.0.1
   script:
-    - chmod +x building-binary-image.sh
-    - ./building-binary-image.sh
+    - chmod +x build-binary-image.sh
+    - ./build-binary-image.sh
+  artifacts:
+    paths:
+      - /builds/vsoare/fastwebserver_with_cicd
+
+build application image:
+  stage: Build_Application_Image
+  image: alpinelinux/docker-cli
+  script:
+    - docker --version
+
