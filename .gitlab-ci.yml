@@ -8,4 +8,4 @@ clone application repository:
     - ls -latr
   artifacts:
       paths:
-        - /home/custom-application/fastwebserver
+        - ./public
