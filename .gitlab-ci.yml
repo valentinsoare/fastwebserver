@@ -1,8 +1,8 @@
 stages:
   - Clone
   - Test_Clone
-  - Build_application_binary
-  - Build_application_image
+  - Build_Application_Binary
+  - Build_Application_Image
 
 clone application repository:
   stage: Clone
@@ -16,7 +16,7 @@ clone application repository:
         - /builds/vsoare/fastwebserver_with_cicd
 
 test if cloning successfully:
-  stage: Test_clone
+  stage: Test_Clone
   image: vsoare/image-to-execute-pipeline:0.0.1
   script:
     - if [[ ! -e ./src || ! -d ./src ]]; then
