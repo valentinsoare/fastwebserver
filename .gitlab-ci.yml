@@ -14,7 +14,6 @@ clone application repository:
     - cd /home/custom-application
     - git clone https://github.com/valentinsoare/fastwebserver.git
     - du -sh .
-    - ls -latr
   artifacts:
       paths:
         - /builds/vsoare/fastwebserver_with_cicd
@@ -23,7 +22,7 @@ test if cloning ok:
   stage: test_clone
   image: vsoare/image-to-execute-pipelines:0.0.1
   script:
-    - printf "\033[31m -> project_size %s\033[0m" "$(du -sh .)"
+    - ls -latrR
     - if [[ ! -e ./src || ! -d ./src ]]; then
         printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist. project was not cloned with success!";
         exit 1;
