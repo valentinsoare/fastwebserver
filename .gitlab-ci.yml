@@ -4,3 +4,5 @@ clone application repository:
   script:
     - cd /home/custom-application
     - git clone https://github.com/valentinsoare/fastwebserver.git
+    - du -sh .
+    - ls -latr
