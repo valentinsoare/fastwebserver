@@ -1,12 +1,12 @@
 stages:
   - Clone
-  - Test_clone
+  - Test_Clone
   - Build_application_binary
   - Build_application_image
 
 clone application repository:
   stage: Clone
-  image: vsoare/image-to-execute-pipelines:0.0.1
+  image: vvsoare/image-to-execute-pipeline:0.0.1
   script:
     - cd /home/custom-application
     - git clone https://gitlab.com/vsoare/fastwebserver_with_cicd.git
@@ -17,7 +17,7 @@ clone application repository:
 
 test if cloning successfully:
   stage: Test_clone
-  image: vsoare/image-to-execute-pipelines:0.0.1
+  image: vsoare/image-to-execute-pipeline:0.0.1
   script:
     - if [[ ! -e ./src || ! -d ./src ]]; then
         printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist. project was not cloned with success!";
@@ -25,3 +25,14 @@ test if cloning successfully:
       fi
       
       printf "\033[32m%s\033[0m\n" " - > src directory exists. fastwebserver successfully cloned!";
+  artifacts:
+    paths:
+      - /builds/vsoare/fastwebserver_with_cicd
+
+
+build application binary from source code:
+  stage: Build_Application_Binary
+  image: vsoare/image-to-execute-pipeline
+  script:
+    - chmod +x building-binary-image.sh
+    - ./building-binary-image.sh

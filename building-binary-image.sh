@@ -1,16 +1,5 @@
 #!/bin/bash
 
-declare dir_exists
-
-prepare_where_to_build() {
-  cd /home/custom-application/fastwebserver
-
-  if [[ "${dir_exists}" -ne 0 ]]; then
-    printf "\n%s\n" "Issues when trying to open /home/custom-application/fastwebserver..."
-    exit 1
-  fi
-}
-
 get_sdk_and_install_tools() {
   curl -s "https://get.sdkman.io" | bash
   source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -36,7 +25,6 @@ checks_if_build_successful() {
 main() {
   set -e
 
-  prepare_where_to_build
   get_sdk_and_install_tools
   build_the_binary
   checks_if_build_successful
