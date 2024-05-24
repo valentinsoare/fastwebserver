@@ -32,7 +32,7 @@ test if cloning successfully:
 
 build application binary from source code:
   stage: Build_Application_Binary
-  image: vsoare/image-to-execute-pipeline
+  image: vsoare/image-to-execute-pipeline:0.0.1
   script:
     - chmod +x building-binary-image.sh
     - ./building-binary-image.sh
