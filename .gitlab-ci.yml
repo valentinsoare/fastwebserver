@@ -8,7 +8,7 @@ clone application repository:
   stage: Clone
   image: alpinelinux/alpine-gitlab-ci
   script:
-    - mkdir /home/custom-application
+    - sudo mkdir /home/custom-application
     - cd /home/custom-application
     - git clone https://gitlab.com/vsoare/fastwebserver_with_cicd.git
     - du -sh .
