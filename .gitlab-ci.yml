@@ -1,10 +1,11 @@
 stages:
-  - clone repo
-  - build app
-  - build docker image
-  - deploy the app
+  - clone application repository
+  - build application binary image
+  - build docker image with application binary
+  - deploy the application in a docker container
 
-build the binary image:
-  image: vsoare/fastwebserver:0.0.1
+clone application repository:
+  image: vsoare/image-to-execute-pipelines:0.0.1
   script:
-    - mvn clean -Pnative native:compile
+    - cd /home/custom-application
+    - git clone https://github.com/valentinsoare/fastwebserver.git

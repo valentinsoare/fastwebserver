@@ -3,10 +3,10 @@
 declare dir_exists
 
 prepare_where_to_build() {
-  cd /home/building-binary_environment/fastwebserver
+  cd /home/custom-application/fastwebserver
 
   if [[ "${dir_exists}" -ne 0 ]]; then
-    printf "\n%s\n" "Issues when trying to open /home/building-binary_environment/fastwebserver..."
+    printf "\n%s\n" "Issues when trying to open /home/custom-application/fastwebserver..."
     exit 1
   fi
 }
@@ -26,11 +26,11 @@ build_the_binary() {
 
 checks_if_build_successful() {
   if [ ! -f target/fastwebserver ]; then
-    printf "\n%s\n" "Failed to create native image."
+    printf "\n\033[31m%s\033[0m\n" "Failed to create native image."
     exit 1
   fi
 
-  printf "\n%s\n" "Native image created successfully."
+  printf "\n\033[32m%s\033[0m\n" "Native image created successfully."
 }
 
 main() {

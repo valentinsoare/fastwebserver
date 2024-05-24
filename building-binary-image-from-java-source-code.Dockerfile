@@ -1,3 +1,4 @@
+
 FROM fedora:39
 LABEL maintainer="Valentin Soare <https://github.com/valentinsoare/fastwebserver>"
 
@@ -8,14 +9,14 @@ RUN dnf install git -y
 RUN git config --global user.name "valentinsoare" \
     && git config --global user.email "soarevalentinn@gmail.com"
 
-RUN mkdir /home/building-binary_environment \
-    && cd /home/building-binary_environment \
+RUN mkdir /home/custom-application \
+    && cd /home/custom-application \
     && git clone https://github.com/valentinsoare/fastwebserver
 
-RUN chmod +x /home/building-binary_environment/fastwebserver/prepare-building-binary-env.sh
+RUN chmod +x /home/custom-application/fastwebserver/prepare-building-binary-image.sh
 
-WORKDIR /home/building-binary_environment/fastwebserver/
+WORKDIR /home/custom-application/fastwebserver/
 
-RUN ./prepare-building-binary-env.sh
+RUN ./prepare-building-binary-image.sh
 
 CMD ["/bin/bash"]

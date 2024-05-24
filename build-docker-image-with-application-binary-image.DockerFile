@@ -7,10 +7,10 @@ RUN sed -i 's/# %wheel/%wheel/g' /etc/sudoers \
     && usermod -aG wheel fastwebserver \
     && dnf install passwd java-17-openjdk.x86_64 -y \
     && echo "default" | passwd fastwebserver --stdin \
-    && chown -R fastwebserver:fastwebserver /home/fastwebserver \
-    && chmod 750 /home/fastwebserver/
+    && chown -R fastwebserver:fastwebserver /home/custom-application/fastwebserver \
+    && chmod 750 /home/custom-application/fastwebserver/
 
-RUN ln -sf /dev/stdout /home/fastwebserver/server.logs \
+RUN ln -sf /dev/stdout /home/custom-application/fastwebserver/server.logs \
     && sudo su fastwebserver
 
 EXPOSE 8080

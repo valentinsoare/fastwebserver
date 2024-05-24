@@ -1,22 +1,25 @@
-name: "building-app-binary-environment"
+version: '3.9'
+name: "execute-building-the-binary-image"
 
 services:
   building-binary-environment:
     build:
       context: .
-      dockerfile: BuildingBinaryFromTheAppJar.Dockerfile
+      dockerfile: building-binary-image-from-java-source-code.Dockerfile
     image: vsoare/environment_for_building_java_apps_binary:0.0.1
-    container_name: building-binary-environment
+    container_name: execute-building-the-binary-image
     tty: true
     networks:
       - nw_fast
     volumes:
-      - building-binary-environment-storage:/home/building-binary_environment
+      - application-storage:/home/building-binary_environment
 
 networks:
   nw_fast:
+    external: true
     name: nw_fast
 
 volumes:
-  building-binary-environment-storage:
-    name: building-binary-environment-storage
+  application-storage:
+    external: true
+    name: application-storage

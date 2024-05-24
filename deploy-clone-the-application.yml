@@ -1,0 +1,22 @@
+name: "clone-the-application-repository"
+
+services:
+  clone-the-application-repository:
+    build:
+      context: .
+      dockerfile: clone-application-repository.Dockerfile
+    image: vsoare/clone-the-application-repository:0.0.1
+    container_name: clone-application-repository
+    tty: true
+    networks:
+      - nw_fast
+    volumes:
+      - application-storage:/home/custom-application
+
+networks:
+  nw_fast:
+    name: nw_fast
+
+volumes:
+  application-storage:
+    name: application-storage

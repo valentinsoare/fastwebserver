@@ -1,10 +1,11 @@
+version: '3.9'
 name: "deploy-application-docker-image"
 
 services:
   fastwebserver:
     build:
       context: .
-      dockerfile: FastWebServerDockerImageCreator.DockerFile
+      dockerfile: build-docker-image-with-application-binary-image.DockerFile
     image: vsoare/fastwebserver:0.0.1
     container_name: fastwebserver
     ports:
@@ -12,7 +13,7 @@ services:
     networks:
       - nw_fast
     volumes:
-      - fastwebserver-storage:/home/fastwebserver
+      - application-storage:/home/fastwebserver
 
 networks:
   nw_fast:
@@ -20,6 +21,6 @@ networks:
     name: nw_fast
 
 volumes:
-  fastwebserver-storage:
+  application-storage:
     external: true
-    name: fastwebserver-storage
+    name: application-storage
