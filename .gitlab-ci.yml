@@ -42,5 +42,8 @@ build application image:
   stage: Build_Application_Image
   image: alpinelinux/docker-cli
   script:
-    - docker --version
-
+    - chmod +x fastwebserver-runner.sh
+    -
+    - docker login --username vsoare --password valisoare_191987+
+    - docker image build -f build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:0.0.1 .
+    - docker image push vsoare/fastwebserver:0.0.1

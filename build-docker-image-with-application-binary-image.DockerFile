@@ -2,10 +2,9 @@
 FROM fedora:39
 LABEL maintainer="Valentin Soare <https://github.com/valentinsoare/fastwebserver>"
 
-COPY ../fastwebserver_with_cicd/* /home/custom-application/fastwebserver/
+COPY ../fastwebserver_with_cicd /home/custom-application/
 
-RUN ln -sf /dev/stdout /home/custom-application/fastwebserver/server.logs \
-    && sudo su fastwebserver
+RUN ln -sf /dev/stdout /home/custom-application/fastwebserver_with_cicd/server.logs
 
 EXPOSE 8080
 
