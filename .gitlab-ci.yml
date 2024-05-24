@@ -1,8 +1,3 @@
-stages:
-  - clone application repository
-  - build application binary image
-  - build docker image with application binary
-  - deploy the application in a docker container
 
 clone application repository:
   image: vsoare/image-to-execute-pipelines:0.0.1
