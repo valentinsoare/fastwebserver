@@ -49,9 +49,9 @@ build application image:
     - docker:dind
   script:
     - ls -latr
-    - docker build -f ./build-docker-image-with-application-binary-image.DockerFile -t fastwebserver:0.0.1 .
+    - docker build -f ./build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:0.0.1 .
     - docker login --username vsoare --password valisoare_191987+
-    - docker image push fastwebserver:0.0.1
+    - docker push fastwebserver:0.0.1
   artifacts:
     paths:
       - /builds/vsoare/fastwebserver_with_cicd
