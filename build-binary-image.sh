@@ -1,6 +1,7 @@
 #!/bin/bash
 
 build_the_binary() {
+  sdk use java 22.3.r17-nik
   mvn clean package
   mvn -Pnative -DskipNativeTests native:compile
 }
