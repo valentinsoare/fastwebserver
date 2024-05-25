@@ -42,7 +42,11 @@ build application binary from source code:
 
 build application image:
   stage: Build_Application_Image
-  image: docker:dind
+  image: docker:stable
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
   script:
     - unset DOCKER_HOST
     - docker login --username vsoare --password valisoare_191987+
