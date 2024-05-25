@@ -30,7 +30,7 @@ test if cloning successfully:
 
 build application binary from source code:
   stage: Build_Application_Binary
-  image: vsoare/image_executing_pipelines:0.0.1
+  image: vsoare/execute_pipelines_java_code:0.0.1
   script:
     - chmod +x build-binary-image.sh
     - ./build-binary-image.sh
@@ -44,10 +44,6 @@ build application image:
   services:
     - docker:dind
   script:
-    - ls -latr
     - docker build -f ./build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:0.0.1 .
     - docker login --username vsoare --password valisoare_191987+
     - docker push vsoare/fastwebserver:0.0.1
-  artifacts:
-    paths:
-      - /builds/vsoare/fastwebserver_with_cicd

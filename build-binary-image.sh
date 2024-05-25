@@ -1,13 +1,5 @@
 #!/bin/bash
 
-get_sdk_and_install_tools() {
-  curl -s "https://get.sdkman.io" | bash
-  source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-  sdk install java 22.3.r17-nik
-  sdk use java 22.3.r17-nik
-}
-
 build_the_binary() {
   mvn clean package
   mvn -Pnative -DskipNativeTests native:compile
@@ -25,7 +17,6 @@ checks_if_build_successful() {
 main() {
   set -e
 
-  get_sdk_and_install_tools
   build_the_binary
   checks_if_build_successful
 }

@@ -14,6 +14,6 @@ COPY ./install-tools-for-building-binary.sh .
 
 RUN chmod +x ./install-tools-for-building-binary.sh
 
-RUN ./install-tools-for-building-binary.sh
+RUN ./install-tools-for-building-binary.sh && rm -fdr *
 
 CMD ["/bin/bash"]
