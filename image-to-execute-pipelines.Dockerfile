@@ -10,6 +10,8 @@ VOLUME application-storage:/home/custom-application
 
 WORKDIR /home/custom-application/fastwebserver
 
+COPY ./install-tools-for-building-binary.sh .
+
 RUN chmod +x ./install-tools-for-building-binary.sh
 
 RUN ./install-tools-for-building-binary.sh
