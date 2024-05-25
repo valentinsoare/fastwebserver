@@ -43,8 +43,6 @@ build application binary from source code:
 build application image:
   stage: Build_Application_Image
   image: docker:stable
-  variables:
-    DOCKER_TLS_CERTDIR: ""
   services:
     - docker:dind
   script:
