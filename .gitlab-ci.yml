@@ -30,12 +30,10 @@ test if cloning successfully:
 
 build application binary from source code:
   stage: Build_Application_Binary
-  image: vsoare/image-to-execute-pipeline:0.0.1
+  image: vsoare/image_executing_pipelines:0.0.1
   script:
     - chmod +x build-binary-image.sh
     - ./build-binary-image.sh
-  rules:
-    - when: never
   artifacts:
     paths:
       - /builds/vsoare/fastwebserver_with_cicd
@@ -53,4 +51,3 @@ build application image:
   artifacts:
     paths:
       - /builds/vsoare/fastwebserver_with_cicd
-
