@@ -34,6 +34,8 @@ build application binary from source code:
   script:
     - chmod +x build-binary-image.sh
     - ./build-binary-image.sh
+  rules:
+    - when: never
   artifacts:
     paths:
       - /builds/vsoare/fastwebserver_with_cicd
