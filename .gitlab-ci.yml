@@ -54,18 +54,14 @@ build application image:
   stage: Build_Application_Image
   tags:
     - webserver
-  image: docker:latest
+  image: docker:dind
 
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
 
-  before_script:
-    - apk add --no-cache py-pip
-    - pip install docker-compose
-
-  services:
-    - docker:dind
+#  services:
+#    - docker:dind
 
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Authenticate to Docker Hub Registry."
