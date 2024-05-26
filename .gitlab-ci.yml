@@ -16,7 +16,7 @@ clone application repository:
     - git clone https://gitlab.com/vsoare/fastwebserver.git
   artifacts:
       paths:
-        - /home/gitlab-runner/builds/u5M4s6Fzv/0/vsoare/fastwebserver
+        - /builds/vsoare/fastwebserver
 
 test if cloning successfully:
   stage: Test_Clone
@@ -33,7 +33,7 @@ test if cloning successfully:
       printf "\033[1;5;42m %s \033[0m \n" " - > src directory exists. fastwebserver successfully cloned!";
   artifacts:
     paths:
-      - /home/gitlab-runner/builds/u5M4s6Fzv/0/vsoare/fastwebserver
+      - /builds/vsoare/fastwebserver
 
 
 build application binary from source code:
@@ -48,7 +48,7 @@ build application binary from source code:
     - ./build-binary-image.sh
   artifacts:
     paths:
-      - /home/gitlab-runner/builds/u5M4s6Fzv/0/vsoare/fastwebserver
+      - /builds/vsoare/fastwebserver
 
 build application image:
   stage: Build_Application_Image
