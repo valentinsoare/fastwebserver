@@ -16,11 +16,11 @@ build_the_binary() {
   sdk use java 22.3.r17-nik
 
   # Run Maven clean and package commands to clean the project and package it into a JAR file
-  sudo mvn clean package
+  mvn clean package
 
   # Run Maven with the native profile to compile the project into a native image
   # Skip the native tests during this process
-  sudo mvn -Pnative -DskipNativeTests native:compile
+  mvn -Pnative -DskipNativeTests native:compile
 }
 
 # Function to check if the build was successful, means that if src directory exists or not.
