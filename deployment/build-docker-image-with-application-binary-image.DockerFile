@@ -6,7 +6,7 @@ LABEL maintainer="Valentin Soare <https://github.com/valentinsoare/fastwebserver
 RUN mkdir -p /home/custom-application/fastwebserver
 
 # Copy the current directory contents into the container at /home/custom-application/fastwebserver
-COPY . /home/custom-application/fastwebserver/
+COPY .. /home/custom-application/fastwebserver/
 
 # Create a symbolic link from /dev/stdout to /home/custom-application/fastwebserver/server.logs
 # This allows the application to write logs to stdout, which can be accessed using the `docker logs` command

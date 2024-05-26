@@ -17,7 +17,7 @@ VOLUME application-storage:/home/custom-application
 WORKDIR /home/custom-application/fastwebserver
 
 # Copy the install-tools-for-building-binary.sh script into the container
-COPY ./install-tools-for-building-binary.sh .
+COPY ./deployment/install-tools-for-building-binary.sh .
 
 # Make the install-tools-for-building-binary.sh script executable
 RUN chmod +x ./install-tools-for-building-binary.sh
