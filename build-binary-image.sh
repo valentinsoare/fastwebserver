@@ -8,9 +8,6 @@ build_the_binary() {
   # Set the current Java version to GraalVM 22.3.r17-nik using SDKMAN
   sdk use java 22.3.r17-nik
 
-  # Set the initial memory and max memory for the JVM
-  export MAVEN_OPTS="-Xms50m -Xmx200m"
-
   # Run Maven clean and package commands to clean the project and package it into a JAR file
   mvn clean package
 
