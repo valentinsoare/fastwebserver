@@ -8,10 +8,10 @@ clone application repository:
   stage: Clone
   image: alpinelinux/alpine-gitlab-ci
   script:
-    - git clone https://gitlab.com/vsoare/fastwebserver_with_cicd.git
+    - git clone https://gitlab.com/vsoare/fastwebserver.git
   artifacts:
       paths:
-        - /builds/vsoare/fastwebserver_with_cicd
+        - /builds/vsoare/fastwebserver
 
 test if cloning successfully:
   stage: Test_Clone
@@ -25,7 +25,7 @@ test if cloning successfully:
       printf "\033[32m%s\033[0m\n" " - > src directory exists. fastwebserver successfully cloned!";
   artifacts:
     paths:
-      - /builds/vsoare/fastwebserver_with_cicd
+      - /builds/vsoare/fastwebserver
 
 
 build application binary from source code:
@@ -36,7 +36,7 @@ build application binary from source code:
     - ./build-binary-image.sh
   artifacts:
     paths:
-      - /builds/vsoare/fastwebserver_with_cicd
+      - /builds/vsoare/fastwebserver
 
 build application image:
   stage: Build_Application_Image
