@@ -79,7 +79,7 @@ public class AsyncNetworkServer {
             } else if (key.isReadable()) {
                 SocketChannel clientChannel = (SocketChannel) key.channel();
 
-                ByteBuffer buffer = ByteBuffer.allocate(4096);
+                ByteBuffer buffer = ByteBuffer.allocate(1024);
                 int bytesRead = clientChannel.read(buffer);
 
                 if (bytesRead == -1) {
