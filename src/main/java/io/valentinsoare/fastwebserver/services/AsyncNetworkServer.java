@@ -21,7 +21,6 @@ import java.util.Set;
 
 @Service
 public class AsyncNetworkServer {
-
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private SelectionKey serverSocketChannelKey;

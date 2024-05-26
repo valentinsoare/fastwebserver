@@ -45,5 +45,6 @@ build application image:
     - docker:dind
   script:
     - docker build -f ./build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:0.0.1 .
+    - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
     - docker login --username vsoare --password valisoare_191987+
     - docker push vsoare/fastwebserver:0.0.1
