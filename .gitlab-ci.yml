@@ -5,6 +5,9 @@ stages:
   - Test_Clone
   - Build_Application_Binary
   - Build_Application_Image
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
 
 
 clone application repository:
