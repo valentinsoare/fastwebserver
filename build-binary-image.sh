@@ -4,20 +4,15 @@
 build_the_binary() {
   ls -latrh
 
-  curl -s "https://get.sdkman.io" | bash
-
-  # Source the script into current bash session.
-  source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
-
   # Set the current Java version to GraalVM 22.3.r17-nik using SDKMAN
   sudo sdk use java 22.3.r17-nik
 
   # Run Maven clean and package commands to clean the project and package it into a JAR file
-  mvn clean package
+  sudo mvn clean package
 
   # Run Maven with the native profile to compile the project into a native image
   # Skip the native tests during this process
-  mvn -Pnative -DskipNativeTests native:compile
+  sudo mvn -Pnative -DskipNativeTests native:compile
 }
 
 # Function to check if the build was successful, means that if src directory exists or not.
