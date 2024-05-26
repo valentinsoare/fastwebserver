@@ -2,7 +2,6 @@
 
 # Function to build the binary of the application
 build_the_binary() {
-  ls -latrh
 
   # Set the current Java version to GraalVM 22.3.r17-nik using SDKMAN
   sudo sdk use java 22.3.r17-nik
