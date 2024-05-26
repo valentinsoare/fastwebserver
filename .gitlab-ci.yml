@@ -10,7 +10,7 @@ clone application repository:
   stage: Clone
   image: alpinelinux/alpine-gitlab-ci
   script:
-    - printf "\033[1;5;42m%s\033[0m\n" "Cloning the repository...."
+    - printf "\033[1;5;42m %s \033[0m \n" "Cloning the repository...."
     - git clone https://gitlab.com/vsoare/fastwebserver.git
   artifacts:
       paths:
@@ -20,13 +20,13 @@ test if cloning successfully:
   stage: Test_Clone
   image: alpine:3.19
   script:
-    - printf "\033[1;5;42m%s\033[0m\n" "Checking if repository was cloned as it should!"
+    - printf "\033[1;5;42m %s \033[0m \n" "Checking if repository was cloned as it should!"
     - if [[ ! -e ./src || ! -d ./src ]]; then
         printf "\033[31m%s\033[0m\n" " - > src directory doesn't exist. project was not cloned with success!";
         exit 1;
       fi
       
-      printf "\033[1;5;42m%s\033[0m\n" " - > src directory exists. fastwebserver successfully cloned!";
+      printf "\033[1;5;42m %s \033[0m \n" " - > src directory exists. fastwebserver successfully cloned!";
   artifacts:
     paths:
       - /builds/vsoare/fastwebserver
@@ -36,9 +36,9 @@ build application binary from source code:
   stage: Build_Application_Binary
   image: vsoare/execute_pipelines_java_code:0.0.1
   script:
-    - printf "\033[1;5;42m%s\033[0m\n" "Make the script executable."
+    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable."
     - chmod +x build-binary-image.sh
-    - printf "\033[1;5;42m%s\033[0m\n" "Execute the script that builds the binary with GraalVM."
+    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM."
     - ./build-binary-image.sh
   artifacts:
     paths:
@@ -50,9 +50,9 @@ build application image:
   services:
     - docker:dind
   script:
-    - printf "\033[1;5;42m%s\033[0m\n" "Build the docker image."
+    - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image."
     - docker build -f ./build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:0.0.1 .
-    - printf "\033[1;5;42m%s\033[0m\n" "Authenticate to Docker Hub Registry."
+    - printf "\033[1;5;42m %s \033[0m \n" "Authenticate to Docker Hub Registry."
     - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
-    - printf "\033[1;5;42m%s\033[0m\n" "Push the docker image to registry."
+    - printf "\033[1;5;42m %s \033[0m \n" "Push the docker image to registry."
     - docker push vsoare/fastwebserver:0.0.1
