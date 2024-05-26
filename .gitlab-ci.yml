@@ -16,7 +16,7 @@ clone application repository:
     - git clone https://gitlab.com/vsoare/fastwebserver.git
   artifacts:
       paths:
-        - /builds/vsoare/fastwebserver
+        - /builds/u5M4s6Fzv/0/vsoare/fastwebserver
 
 test if cloning successfully:
   stage: Test_Clone
