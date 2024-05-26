@@ -2,13 +2,7 @@
 
 # Function to build the binary of the application
 build_the_binary() {
-  # Get the installation script for SDKMAN.io.
-  curl -s "https://get.sdkman.io" | bash
-
   ls -latrh
-
-  # Source the SDKMAN initialization script to make SDKMAN available in this shell session
-  source "/$HOME/.sdkman/bin/sdkman-init.sh"
 
   # Set the current Java version to GraalVM 22.3.r17-nik using SDKMAN
   sudo sdk use java 22.3.r17-nik
