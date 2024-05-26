@@ -56,7 +56,14 @@ build application image:
     - webserver
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "/certs/client"
+
   script:
     - docker image ls
     - docker container ls
