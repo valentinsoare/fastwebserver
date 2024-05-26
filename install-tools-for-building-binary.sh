@@ -11,3 +11,6 @@ source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
 
 # Install GraalVM.
 sdk install java 22.3.r17-nik
+
+# Set GraalVM as current runner for java.
+sdk use java 22.3.r17-nik
