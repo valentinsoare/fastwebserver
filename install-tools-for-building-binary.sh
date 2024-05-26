@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Switch to gitlab-runner
 sudo su gitlab-runner
 
 # Get the installation script for SDKMAN.io.
@@ -10,6 +11,3 @@ source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
 
 # Install GraalVM.
 sdk install java 22.3.r17-nik
-
-# Set GraalVM as current runner for java.
-sdk use java 22.3.r17-nik

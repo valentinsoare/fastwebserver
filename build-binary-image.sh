@@ -2,17 +2,13 @@
 
 # Function to build the binary of the application
 build_the_binary() {
+  # Switch to gitlab-runner user
   sudo su gitlab-runner
-
-  # Get the installation script for SDKMAN.io.
-  curl -s "https://get.sdkman.io" | bash
 
   # Source the script into current bash session.
   source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
 
-  # Install GraalVM.
-  sdk install java 22.3.r17-nik
-
+  # Set to use GraalVM.
   sdk use java 22.3.r17-nik
 
   # Run Maven clean and package commands to clean the project and package it into a JAR file
