@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo su gitlab-runner
+
 # Get the installation script for SDKMAN.io.
 curl -s "https://get.sdkman.io" | bash
 
