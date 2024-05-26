@@ -2,8 +2,10 @@
 
 # Function to build the binary of the application
 build_the_binary() {
-  # Home of the runner
-  cd /home/gitlab-runner/
+  # Get the installation script for SDKMAN.io.
+  curl -s "https://get.sdkman.io" | bash
+
+  ls -latr
 
   # Source the SDKMAN initialization script to make SDKMAN available in this shell session
   source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
