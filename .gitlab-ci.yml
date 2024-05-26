@@ -8,6 +8,8 @@ stages:
 
 clone application repository:
   stage: Clone
+  tags:
+    - webserver
   image: alpinelinux/alpine-gitlab-ci
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Cloning the repository...."
