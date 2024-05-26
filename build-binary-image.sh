@@ -4,10 +4,16 @@
 build_the_binary() {
   sudo su gitlab-runner
 
+  # Get the installation script for SDKMAN.io.
+  curl -s "https://get.sdkman.io" | bash
+
+  # Source the script into current bash session.
   source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
 
-  # Set the current Java version to GraalVM 22.3.r17-nik using SDKMAN
-  sudo sdk use java 22.3.r17-nik
+  # Install GraalVM.
+  sdk install java 22.3.r17-nik
+
+  sdk use java 22.3.r17-nik
 
   # Run Maven clean and package commands to clean the project and package it into a JAR file
   sudo mvn clean package
