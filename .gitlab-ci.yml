@@ -54,9 +54,12 @@ build application image:
   stage: Build_Application_Image
   tags:
     - webserver
-  image: docker:dind
-#  services:
-#    - docker:dind
+  image: docker:latest
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Authenticate to Docker Hub Registry."
     - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
