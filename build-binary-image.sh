@@ -2,11 +2,8 @@
 
 # Function to build the binary of the application
 build_the_binary() {
-  # Switch to gitlab-runner user
-  sudo su gitlab-runner
-
   # Source the script into current bash session.
-  source "/home/gitlab-runner/.sdkman/bin/sdkman-init.sh"
+  source "/$HOME/.sdkman/bin/sdkman-init.sh"
 
   # Set to use GraalVM.
   sdk use java 22.3.r17-nik
