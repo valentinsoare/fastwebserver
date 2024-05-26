@@ -54,11 +54,9 @@ build application image:
   stage: Build_Application_Image
   tags:
     - webserver
-  image: docker:dind
-
+  image: docker:latest
   services:
     - docker:dind
-
   script:
     - docker image ls
     - docker container ls
