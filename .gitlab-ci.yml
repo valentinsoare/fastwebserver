@@ -90,6 +90,9 @@ build application image for staging:
     - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
     - printf "\033[1;5;42m %s \033[0m \n" "Push the docker image to registry for staging env."
     - docker push vsoare/fastwebserver:staging-"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}"
+  artifacts:
+    paths:
+      - /builds/vsoare/fastwebserver
 
 
 build application binary from source code for production:
