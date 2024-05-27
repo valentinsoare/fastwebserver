@@ -3,11 +3,11 @@
 stages:
   - Clone
   - Test_Clone
-  - Build_Application_Binary
-  - Build_Application_Image
-#workflow:
-#  rules:
-#    - if: '$CI_PIPELINE_SOURCE == "web"'
+  - Build_Application_Binary_Production
+  - Build_Application_Image_Production
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
 
 # General cache on all jobs
 cache:
