@@ -9,6 +9,11 @@ stages:
 #  rules:
 #    - if: '$CI_PIPELINE_SOURCE == "web"'
 
+# General cache on all jobs
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
 clone application repository:
   stage: Clone
