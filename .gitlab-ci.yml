@@ -54,7 +54,7 @@ test if cloning successfully:
       - /builds/vsoare/fastwebserver
 
 
-build application binary from source code for staging:
+build application binary for staging:
   stage: Build_Binary
   environment:
     name: Staging
@@ -96,7 +96,7 @@ build application image for staging:
       - /builds/vsoare/fastwebserver
 
 
-build application binary from source code for production:
+build application binary for production:
   stage: Build_Binary
   environment:
     name: Production
