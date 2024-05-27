@@ -3,10 +3,8 @@
 stages:
   - Clone
   - Test_Clone
-  - Build_Application_Binary_Staging
-  - Build_Application_Binary_Production
-  - Build_Application_Image_Staging
-  - Build_Application_Image_Production
+  - Staging
+  - Production
 workflow:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "web"'
@@ -49,7 +47,7 @@ test if cloning successfully:
 
 
 build application binary from source code for staging:
-  stage: Build_Application_Binary_Staging
+  stage: Staging
   environment:
     name: staging
   tags:
@@ -66,7 +64,7 @@ build application binary from source code for staging:
 
 
 build application image for staging:
-  stage: Build_Application_Image_Staging
+  stage: Staging
   environment:
     name: staging
   tags:
@@ -95,7 +93,7 @@ build application image for staging:
 
 
 build application binary from source code for production:
-  stage: Build_Application_Binary_Production
+  stage: Production
   environment:
     name: production
   tags:
@@ -111,7 +109,7 @@ build application binary from source code for production:
       - /builds/vsoare/fastwebserver
 
 build application image for production:
-  stage: Build_Application_Image_Production
+  stage: Production
   environment:
     name: production
   tags:
