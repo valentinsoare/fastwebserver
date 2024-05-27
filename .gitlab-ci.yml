@@ -51,7 +51,7 @@ test if cloning successfully:
 build application binary from source code for staging:
   stage: Build_Application_Binary_Staging
   environment:
-    name: Staging
+    name: staging
   tags:
     - webserver
   image: vsoare/execute_pipelines_java_code:0.0.1
