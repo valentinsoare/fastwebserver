@@ -62,7 +62,7 @@ build application binary from source code for production:
 
 
 build application image for production:
-  stage: Build_Application_Image_production
+  stage: Build_Application_Image_Production
   tags:
     - webserver
 
