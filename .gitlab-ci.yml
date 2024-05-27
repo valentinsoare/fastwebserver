@@ -109,7 +109,6 @@ build application binary from source code for production:
   artifacts:
     paths:
       - /builds/vsoare/fastwebserver
-      -
 
 build application image for production:
   stage: Build_Application_Image_Production
