@@ -3,11 +3,11 @@
 stages:
   - Clone
   - Test_Clone
-  - Build_Application_Binary
-  - Build_Application_Image
-#workflow:
-#  rules:
-#    - if: '$CI_PIPELINE_SOURCE == "web"'
+  - Build_Application_Binary_Production
+  - Build_Application_Image_Production
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
 
 # General cache on all jobs
 cache:
@@ -46,8 +46,8 @@ test if cloning successfully:
       - /builds/vsoare/fastwebserver
 
 
-build application binary from source code:
-  stage: Build_Application_Binary
+build application binary from source code for production:
+  stage: Build_Application_Binary_Production
   tags:
     - webserver
   image: vsoare/execute_pipelines_java_code:0.0.1
@@ -61,8 +61,8 @@ build application binary from source code:
       - /builds/vsoare/fastwebserver
 
 
-build application image:
-  stage: Build_Application_Image
+build application image for production:
+  stage: Build_Application_Image_production
   tags:
     - webserver
 
@@ -77,7 +77,7 @@ build application image:
     DOCKER_TLS_CERTDIR: "/certs"
     DOCKER_TLS_VERIFY: 1
     DOCKER_CERT_PATH: "/certs/client"
-    APP_VERSION: "latest"
+    APP_VERSION: "0.0.2"
 
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image."
