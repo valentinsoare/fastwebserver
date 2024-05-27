@@ -1,5 +1,4 @@
 # Use Fedora 39 as the base image
-
 FROM fedora:39
 LABEL maintainer="Valentin Soare <https://github.com/valentinsoare/fastwebserver>"
 

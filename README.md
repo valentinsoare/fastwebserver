@@ -17,4 +17,4 @@ The project is built using the following technologies:
 
 The project includes a CI/CD pipeline that automates the processes of cloning the repository, testing the clone, building the application binary, and building the docker image of the application. This pipeline is defined in the `.gitlab-ci.yml` file and uses a custom Docker image (`vsoare/image-to-execute-pipelines:0.0.1`) to execute the pipeline stages.
 
-## more to come...
+> :point_right: _more to come_
