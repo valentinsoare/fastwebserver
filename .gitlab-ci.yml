@@ -65,23 +65,6 @@ build application binary from source code for staging:
       - /builds/vsoare/fastwebserver
 
 
-build application binary from source code for production:
-  stage: Build_Application_Binary_Production
-  environment:
-    name: production
-  tags:
-    - webserver
-  image: vsoare/execute_pipelines_java_code:0.0.1
-  script:
-    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable for production environment"
-    - chmod +x ./deployment/build-binary-image.sh
-    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in production."
-    - ./deployment/build-binary-image.sh
-  artifacts:
-    paths:
-      - /builds/vsoare/fastwebserver
-
-
 build application image for staging:
   stage: Build_Application_Image_Staging
   environment:
@@ -110,6 +93,23 @@ build application image for staging:
     - printf "\033[1;5;42m %s \033[0m \n" "Push the docker image to registry for staging env."
     - docker push vsoare/fastwebserver:staging-"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}"
 
+
+build application binary from source code for production:
+  stage: Build_Application_Binary_Production
+  environment:
+    name: production
+  tags:
+    - webserver
+  image: vsoare/execute_pipelines_java_code:0.0.1
+  script:
+    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable for production environment"
+    - chmod +x ./deployment/build-binary-image.sh
+    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in production."
+    - ./deployment/build-binary-image.sh
+  artifacts:
+    paths:
+      - /builds/vsoare/fastwebserver
+      -
 
 build application image for production:
   stage: Build_Application_Image_Production
