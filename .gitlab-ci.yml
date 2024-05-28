@@ -116,10 +116,13 @@ build application binary for production:
     paths:
       - "${PATH_FOR_ARTIFACTS}"
 
+
 build application image for production:
   stage: Production
   environment:
     name: Production
+  when: manual
+  allow_failure: false
   tags:
     - "${TAG_FOR_THE_RUNNER}"
 
