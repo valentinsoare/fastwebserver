@@ -1,9 +1,13 @@
 package io.valentinsoare.fastwebserver.runner;
 
+import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
 import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
+import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.*;
 
 
 /**
@@ -13,17 +17,46 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationRunner implements CommandLineRunner {
-    private final AsyncNetworkServer asyncNetworkServer;
+    private AsyncNetworkServer asyncNetworkServer;
+    private ServerOptionsExecutionTime serverOptionsExecutionTime;
 
-    /**
-     * Constructor for the ApplicationRunner.
-     * It uses Spring's @Autowired annotation to inject an instance of AsyncNetworkServer into this runner.
-     *
-     * @param asyncNetworkServer An instance of AsyncNetworkServer.
-     */
     @Autowired
-    public ApplicationRunner(AsyncNetworkServer asyncNetworkServer) {
-        this.asyncNetworkServer = asyncNetworkServer;
+    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime) {
+        this.serverOptionsExecutionTime = serverOptionsExecutionTime;
+    }
+
+    private Map<String, String> extractOptionsFromUserInput(String[] arguments) {
+        List<String> optionsFromUserInput = new ArrayList<>();
+        List<String> valuesFromUserInput = Collections.emptyList();
+
+        CommandLineParser commandLineParser = new DefaultParser();
+
+        try {
+            CommandLine commandLine = commandLineParser.parse(serverOptionsExecutionTime.getRequiredOptions(), arguments);
+
+            for (Option o : serverOptionsExecutionTime.getRequiredOptions().getOptions()) {
+                if (commandLine.hasOption(o)) {
+                    optionsFromUserInput.add(o.getLongOpt());
+                }
+            }
+
+            valuesFromUserInput = new ArrayList<>(Arrays.asList(commandLine.getArgs()));
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        if ((optionsFromUserInput.isEmpty()) || (optionsFromUserInput.size() != valuesFromUserInput.size())) {
+            return Map.of("port", "8080");
+        }
+
+        Map<String, String> returnForOptions = new HashMap<>();
+
+        for (int i = 0; i < optionsFromUserInput.size(); i++) {
+            returnForOptions.put(optionsFromUserInput.get(i), valuesFromUserInput.get(i));
+        }
+
+        return returnForOptions;
     }
 
     /**
@@ -35,6 +68,9 @@ public class ApplicationRunner implements CommandLineRunner {
      */
     @Override
     public void run(String... args) {
+        Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
+
+        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(Integer.parseInt(optionsToBeUsedOnServer.get("port")));
         asyncNetworkServer.runServer();
     }
 }

@@ -1,7 +1,5 @@
 package io.valentinsoare.fastwebserver.services;
 
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
@@ -19,8 +17,8 @@ import java.util.Set;
  * It uses non-blocking I/O and a selector to handle multiple network connections.
  */
 
-@Service
 public class AsyncNetworkServer {
+    private int connectionPort;
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private SelectionKey serverSocketChannelKey;
@@ -32,20 +30,22 @@ public class AsyncNetworkServer {
      * Constructor for the AsyncNetworkServer.
      * It initializes the server socket channel, sets the socket options, binds it to a port, and opens a selector.
      */
-    public AsyncNetworkServer() {
+    public AsyncNetworkServer(int connectionPort) {
+        this.connectionPort = connectionPort;
+
         try {
             serverSocketChannel = ServerSocketChannel.open();
 
             serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
             serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEPORT, true);
 
-            serverSocketChannel.bind(new InetSocketAddress(8080));
+            serverSocketChannel.bind(new InetSocketAddress(connectionPort));
             serverSocketChannel.configureBlocking(false);
 
             selector = Selector.open();
 
             serverSocketChannelKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.println(" Server started on port 8080...");
+            System.out.printf("Server started on port %s...", connectionPort);
 
         } catch (IOException e) {
             System.out.printf("%n\033[31m ERROR: Issues in the init phase of the web server. %s.%n%n\033[0m", e.getMessage());
@@ -150,5 +150,9 @@ public class AsyncNetworkServer {
         } catch (IOException e) {
             System.err.printf("%n \033[31mERROR: Failed to close resources. %s.\033[0m%n%n", e.getMessage());
         }
+    }
+
+    public int getConnectionPort() {
+        return connectionPort;
     }
 }
