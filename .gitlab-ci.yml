@@ -106,7 +106,6 @@ stop review:
   script:
     - rm -fdr "/builds/vsoare/*"
     - docker system prune -a
-  when: manual
   environment:
     name: "Review/${CI_COMMIT_REF_NAME}"
     action: stop
