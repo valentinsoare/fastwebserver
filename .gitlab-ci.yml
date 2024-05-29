@@ -104,7 +104,7 @@ stop review:
   variables:
     GIT_STRATEGY: none
   script:
-    - rm -fdr "/builds/vsoare/*"
+    - rm -fdr /builds/vsoare/*
     - docker system prune -a
   environment:
     name: "Review/${CI_COMMIT_REF_NAME}"
