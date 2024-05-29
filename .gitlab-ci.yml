@@ -3,6 +3,7 @@
 stages:
   - Clone
   - Test_Clone
+  - Review
   - Stage
   - Production
 workflow:
@@ -58,6 +59,56 @@ test if cloning successfully:
       - "${PATH_FOR_ARTIFACTS}"
 
 
+build application binary for review:
+  stage: Review
+  environment:
+    name: "Review/${CI_COMMIT_REF_NAME}"
+  tags:
+    - "${TAG_FOR_THE_RUNNER}"
+  image: "${DOCKER_IMAGE_FOR_BINARY_CREATION_STARTER}"
+  only:
+    - merge_requests
+  script:
+    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable for review environment"
+    - chmod +x ./deployment/build-binary-image.sh
+    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in review environment"
+    - ./deployment/build-binary-image.sh
+  artifacts:
+    paths:
+      - "${PATH_FOR_ARTIFACTS}"
+
+build application image for review:
+  stage: Review
+  environment:
+    name: "Review/${CI_COMMIT_REF_NAME}"
+    on_stop: stop review
+  tags:
+    - "${TAG_FOR_THE_RUNNER}"
+  only:
+    - merge_requests
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+  script:
+    - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image in review environment."
+    - docker build -f ./deployment/build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:staging-"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}" .
+  artifacts:
+    paths:
+      - "${PATH_FOR_ARTIFACTS}"
+
+stop review:
+  stage: Review
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - rm -fdr "/builds/vsoare/*"
+    - docker system prune -a
+  when: manual
+  environment:
+    name: "Review/${CI_COMMIT_REF_NAME}"
+    action: stop
+
 build application binary for staging:
   stage: Stage
   environment:
@@ -81,18 +132,13 @@ build application image for staging:
     name: Staging
   tags:
     - "${TAG_FOR_THE_RUNNER}"
-
   image: docker:latest
-
   services:
     - name: docker:dind
       alias: docker
-
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image in staging environment."
     - docker build -f ./deployment/build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:staging-"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}" .
-    - printf "\033[1;5;42m %s \033[0m \n" "Authenticate to Docker Hub Registry in staging env."
-    - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
   artifacts:
     paths:
       - "${PATH_FOR_ARTIFACTS}"
@@ -104,6 +150,7 @@ build application binary for production:
     name: Production
   only:
     - master
+    - merge_requests
   tags:
     - "${TAG_FOR_THE_RUNNER}"
   image: "${DOCKER_IMAGE_FOR_BINARY_CREATION_STARTER}"
@@ -123,17 +170,15 @@ build application image for production:
     name: Production
   only:
     - master
+    - merge_requests
 #  when: manual
 #  allow_failure: false
   tags:
     - "${TAG_FOR_THE_RUNNER}"
-
   image: docker:latest
-
   services:
     - name: docker:dind
       alias: docker
-
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image for production"
     - docker build -f ./deployment/build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}" .
