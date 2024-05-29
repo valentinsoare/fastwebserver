@@ -25,6 +25,14 @@ public class ApplicationRunner implements CommandLineRunner {
         this.serverOptionsExecutionTime = serverOptionsExecutionTime;
     }
 
+    /**
+     * This method extracts options from user input.
+     * It parses the command line arguments and extracts the options and their values.
+     * If no options are provided, it defaults to port 8080.
+     *
+     * @param arguments The command line arguments
+     * @return A map of options and their values
+     */
     private Map<String, String> extractOptionsFromUserInput(String[] arguments) {
         List<String> optionsFromUserInput = new ArrayList<>();
         List<String> valuesFromUserInput = Collections.emptyList();
@@ -43,7 +51,8 @@ public class ApplicationRunner implements CommandLineRunner {
             valuesFromUserInput = new ArrayList<>(Arrays.asList(commandLine.getArgs()));
 
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            System.out.printf("%n \033[1;31m%s\033[0m%n", e.getMessage());
+            System.exit(1);
         }
 
         if ((optionsFromUserInput.isEmpty()) || (optionsFromUserInput.size() != valuesFromUserInput.size())) {
@@ -69,8 +78,8 @@ public class ApplicationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
+        this.asyncNetworkServer = new AsyncNetworkServer(Integer.parseInt(optionsToBeUsedOnServer.get("port")));
 
-        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(Integer.parseInt(optionsToBeUsedOnServer.get("port")));
         asyncNetworkServer.runServer();
     }
 }
