@@ -99,6 +99,10 @@ build application image for review:
 
 stop review:
   stage: Review
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
   only:
     - merge_requests
   variables:
