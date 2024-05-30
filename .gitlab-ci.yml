@@ -60,7 +60,7 @@ test if cloning successfully:
 
 
 
-build application binary template: &build_application_binary
+.build application binary template: &buildapplicationbinary
   only:
     - master
   tags:
@@ -76,7 +76,7 @@ build application binary template: &build_application_binary
       - "${PATH_FOR_ARTIFACTS}"
 
 
-build docker image template:
+.builddockerimagetemplate:
   only:
     - master
   tags:
@@ -157,7 +157,7 @@ build application binary for staging:
     name: Staging
   variables:
     WHERE: staging
-  <<: *build_application_binary
+  <<: *buildapplicationbinary
 
 
 build application image for staging:
@@ -166,7 +166,7 @@ build application image for staging:
     name: Staging
   variables:
     WHERE: staging
-  extends: build docker image template
+  extends: .builddockerimagetemplate
 
 
 build application binary for production:
@@ -175,7 +175,7 @@ build application binary for production:
     name: Production
   variables:
     WHERE: production
-  <<: *build_application_binary
+  <<: *buildapplicationbinary
 
 build application image for production:
   stage: Production
@@ -185,7 +185,7 @@ build application image for production:
 #  allow_failure: false
   variables:
     WHERE: production
-  extends: build docker image template
+  extends: .builddockerimagetemplate
   before_script:
     - printf "\n \033[1;5;42m PRODUCTION TIME \033[0m\n\n"
   script:
