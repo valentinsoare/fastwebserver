@@ -60,7 +60,7 @@ test if cloning successfully:
 
 
 
-build_application_binary_template: &build_application_binary
+.build_application_binary_template: &build_application_binary
   only:
     - master
   tags:
