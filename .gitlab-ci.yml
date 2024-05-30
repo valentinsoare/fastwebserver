@@ -166,7 +166,7 @@ build application image for staging:
     name: Staging
   variables:
     WHERE: staging
-  extends: .build_docker_image_template
+  extends: build docker image template
 
 
 build application binary for production:
