@@ -73,7 +73,7 @@ test if cloning successfully:
     - ./deployment/build-binary-image.sh
 
 
-.builddockerimagetemplate:
+.builddockerimagetemplate: &builddockerimage
   only:
     - master
   tags:
@@ -188,7 +188,7 @@ build application image for production:
 #  allow_failure: false
   variables:
     WHERE: production
-  extends: .builddockerimagetemplate
+  <<: *builddockerimage
   script:
     - printf "\033[1;5;42m %s \033[0m \n" "Authenticate to Docker Hub Registry for production env."
     - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
