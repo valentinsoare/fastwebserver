@@ -60,7 +60,7 @@ test if cloning successfully:
 
 
 
-.build_application_binary_template: &build_application_binary
+build application binary template: &build_application_binary
   only:
     - master
   tags:
@@ -76,7 +76,7 @@ test if cloning successfully:
       - "${PATH_FOR_ARTIFACTS}"
 
 
-.build_docker_image_template:
+build docker image template:
   only:
     - master
   tags:
@@ -185,7 +185,7 @@ build application image for production:
 #  allow_failure: false
   variables:
     WHERE: production
-  extends: .build_docker_image_template
+  extends: build docker image template
   before_script:
     - printf "\n \033[1;5;42m PRODUCTION TIME \033[0m\n\n"
   script:
