@@ -1,6 +1,6 @@
 package io.valentinsoare.fastwebserver.runner;
 
-import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
+import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
 import org.springframework.aot.generate.Generated;
 import org.springframework.beans.factory.aot.BeanInstanceSupplier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -15,7 +15,7 @@ public class ApplicationRunner__BeanDefinitions {
    * Get the bean instance supplier for 'applicationRunner'.
    */
   private static BeanInstanceSupplier<ApplicationRunner> getApplicationRunnerInstanceSupplier() {
-    return BeanInstanceSupplier.<ApplicationRunner>forConstructor(AsyncNetworkServer.class)
+    return BeanInstanceSupplier.<ApplicationRunner>forConstructor(ServerOptionsExecutionTime.class)
             .withGenerator((registeredBean, args) -> new ApplicationRunner(args.get(0)));
   }
 

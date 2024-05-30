@@ -2,9 +2,9 @@ package io.valentinsoare.fastwebserver.config;
 
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
-@Configuration
+@Service
 public class ServerOptionsExecutionTime {
     private Options requiredOptions;
 
@@ -23,7 +23,7 @@ public class ServerOptionsExecutionTime {
     private void setTheOptionsAvailableForTheApplication() {
         this.requiredOptions = new Options();
 
-        Option port = createOption("p", "--port", "port on which the server will listen for incoming connections");
+        Option port = createOption("p", "port", "port on which the server will listen for incoming connections");
         requiredOptions.addOption(port);
     }
 

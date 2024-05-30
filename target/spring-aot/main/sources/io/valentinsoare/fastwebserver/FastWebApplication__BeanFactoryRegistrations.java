@@ -1,7 +1,7 @@
 package io.valentinsoare.fastwebserver;
 
+import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime__BeanDefinitions;
 import io.valentinsoare.fastwebserver.runner.ApplicationRunner__BeanDefinitions;
-import io.valentinsoare.fastwebserver.services.AsyncNetworkServer__BeanDefinitions;
 import org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator__BeanDefinitions;
 import org.springframework.aot.generate.Generated;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -44,8 +44,8 @@ public class FastWebApplication__BeanFactoryRegistrations {
     beanFactory.registerBeanDefinition("org.springframework.context.event.internalEventListenerProcessor", EventListenerMethodProcessor__BeanDefinitions.getInternalEventListenerProcessorBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.context.event.internalEventListenerFactory", DefaultEventListenerFactory__BeanDefinitions.getInternalEventListenerFactoryBeanDefinition());
     beanFactory.registerBeanDefinition("fastWebApplication", FastWebApplication__BeanDefinitions.getFastWebApplicationBeanDefinition());
+    beanFactory.registerBeanDefinition("serverOptionsExecutionTime", ServerOptionsExecutionTime__BeanDefinitions.getServerOptionsExecutionTimeBeanDefinition());
     beanFactory.registerBeanDefinition("applicationRunner", ApplicationRunner__BeanDefinitions.getApplicationRunnerBeanDefinition());
-    beanFactory.registerBeanDefinition("asyncNetworkServer", AsyncNetworkServer__BeanDefinitions.getAsyncNetworkServerBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.AutoConfigurationPackages", AutoConfigurationPackages__BeanDefinitions.BasePackages.getAutoConfigurationPackagesBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration", PropertyPlaceholderAutoConfiguration__BeanDefinitions.getPropertyPlaceholderAutoConfigurationBeanDefinition());
     beanFactory.registerBeanDefinition("propertySourcesPlaceholderConfigurer", PropertyPlaceholderAutoConfiguration__BeanDefinitions.getPropertySourcesPlaceholderConfigurerBeanDefinition());

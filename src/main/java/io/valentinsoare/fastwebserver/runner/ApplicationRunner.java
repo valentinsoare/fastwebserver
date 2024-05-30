@@ -17,8 +17,7 @@ import java.util.*;
  */
 @Component
 public class ApplicationRunner implements CommandLineRunner {
-    private AsyncNetworkServer asyncNetworkServer;
-    private ServerOptionsExecutionTime serverOptionsExecutionTime;
+    private final ServerOptionsExecutionTime serverOptionsExecutionTime;
 
     @Autowired
     public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime) {
@@ -68,6 +67,23 @@ public class ApplicationRunner implements CommandLineRunner {
         return returnForOptions;
     }
 
+    private int validatePortAsAnOption(String p) {
+        try {
+            int i = Integer.parseInt(p);
+
+            if (i <= 1024 || i > 65535) {
+                throw new NumberFormatException();
+            }
+
+            return i;
+        } catch (NumberFormatException e) {
+            System.out.printf("%n \033[1;31m%s%n %s\033[0m%n", e.getMessage(),
+                    "Port should be a integer value. In this case it will default to 8080.");
+        }
+
+        return 8080;
+    }
+
     /**
      * This method is the entry point for the runner.
      * It is called after the application context is loaded and just before SpringApplication.run(…) completes.
@@ -78,7 +94,7 @@ public class ApplicationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
-        this.asyncNetworkServer = new AsyncNetworkServer(Integer.parseInt(optionsToBeUsedOnServer.get("port")));
+        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(optionsToBeUsedOnServer.get("port")));
 
         asyncNetworkServer.runServer();
     }

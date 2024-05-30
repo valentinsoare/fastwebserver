@@ -15,6 +15,17 @@
     "allPublicConstructors": true
   },
   {
+    "name": "io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime",
+    "queryAllPublicMethods": true,
+    "queryAllDeclaredMethods": true,
+    "queriedMethods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [ ]
+      }
+    ]
+  },
+  {
     "name": "io.valentinsoare.fastwebserver.FastWebApplication",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
@@ -59,19 +70,8 @@
       {
         "name": "<init>",
         "parameterTypes": [
-          "io.valentinsoare.fastwebserver.services.AsyncNetworkServer"
+          "io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime"
         ]
-      }
-    ]
-  },
-  {
-    "name": "io.valentinsoare.fastwebserver.services.AsyncNetworkServer",
-    "queryAllPublicMethods": true,
-    "queryAllDeclaredMethods": true,
-    "queriedMethods": [
-      {
-        "name": "<init>",
-        "parameterTypes": [ ]
       }
     ]
   },

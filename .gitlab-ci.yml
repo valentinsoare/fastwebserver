@@ -59,6 +59,41 @@ test if cloning successfully:
       - "${PATH_FOR_ARTIFACTS}"
 
 
+
+build_application_binary_template: &build_application_binary
+  only:
+    - master
+  tags:
+    - "${TAG_FOR_THE_RUNNER}"
+  image: "${DOCKER_IMAGE_FOR_BINARY_CREATION_STARTER}"
+  script:
+    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable for ${WHERE} environment"
+    - chmod +x ./deployment/build-binary-image.sh
+    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in ${WHERE} environment"
+    - ./deployment/build-binary-image.sh
+  artifacts:
+    paths:
+      - "${PATH_FOR_ARTIFACTS}"
+
+
+.build_docker_image_template:
+  only:
+    - master
+  tags:
+    - "${TAG_FOR_THE_RUNNER}"
+  image: docker:latest
+  services:
+    - name: docker:dind
+      alias: docker
+  script:
+    - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image in ${WHERE} environment."
+    - docker build -f ./deployment/build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:staging-"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}" .
+  artifacts:
+    paths:
+      - "${PATH_FOR_ARTIFACTS}"
+
+
+
 build application binary for review:
   stage: Review
   only:
@@ -120,76 +155,41 @@ build application binary for staging:
   stage: Stage
   environment:
     name: Staging
-  tags:
-    - "${TAG_FOR_THE_RUNNER}"
-  image: "${DOCKER_IMAGE_FOR_BINARY_CREATION_STARTER}"
-  script:
-    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable for staging environment"
-    - chmod +x ./deployment/build-binary-image.sh
-    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in staging environment"
-    - ./deployment/build-binary-image.sh
-  artifacts:
-    paths:
-      - "${PATH_FOR_ARTIFACTS}"
+  variables:
+    WHERE: staging
+  <<: *build_application_binary
+
 
 build application image for staging:
   stage: Stage
   environment:
     name: Staging
-  tags:
-    - "${TAG_FOR_THE_RUNNER}"
-  image: docker:latest
-  services:
-    - name: docker:dind
-      alias: docker
-  script:
-    - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image in staging environment."
-    - docker build -f ./deployment/build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:staging-"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}" .
-  artifacts:
-    paths:
-      - "${PATH_FOR_ARTIFACTS}"
+  variables:
+    WHERE: staging
+  extends: .build_docker_image_template
 
 
 build application binary for production:
   stage: Production
   environment:
     name: Production
-  only:
-    - master
-    - merge_requests
-  tags:
-    - "${TAG_FOR_THE_RUNNER}"
-  image: "${DOCKER_IMAGE_FOR_BINARY_CREATION_STARTER}"
-  script:
-    - printf "\033[1;5;42m %s \033[0m \n" "Make the script executable for production environment"
-    - chmod +x ./deployment/build-binary-image.sh
-    - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in production."
-    - ./deployment/build-binary-image.sh
-  artifacts:
-    paths:
-      - "${PATH_FOR_ARTIFACTS}"
+  variables:
+    WHERE: production
+  <<: *build_application_binary
 
 build application image for production:
   stage: Production
   environment:
     name: Production
-  only:
-    - master
-    - merge_requests
 #  when: manual
 #  allow_failure: false
-  tags:
-    - "${TAG_FOR_THE_RUNNER}"
-  image: docker:latest
-  services:
-    - name: docker:dind
-      alias: docker
+  variables:
+    WHERE: production
+  extends: .build_docker_image_template
   before_script:
     - printf "\n \033[1;5;42m PRODUCTION TIME \033[0m\n\n"
   script:
-    - printf "\033[1;5;42m %s \033[0m \n" "Build the docker image for production"
-    - docker build -f ./deployment/build-docker-image-with-application-binary-image.DockerFile -t vsoare/fastwebserver:"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}" .
     - printf "\033[1;5;42m %s \033[0m \n" "Authenticate to Docker Hub Registry for production env."
     - echo "${DOCKER_TOKEN}" | docker login --username ${DOCKER_USERNAME} --password-stdin
-    - printf "\033[1;5;42m %s \033[0m \n" "Push the docker image to registry in production."
+    - printf "\033[1;5;42m %s \033[0m \n" "Push the docker image to registry in ${WHERE}."
     - docker push vsoare/fastwebserver:"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}"
