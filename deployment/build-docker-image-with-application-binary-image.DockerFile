@@ -26,4 +26,4 @@ RUN chmod +x fastwebserver-runner.sh
 
 # Define the command to run the application
 # The application logs are redirected to server.logs
-CMD ["./fastwebserver-runner.sh", ">", "server.logs", "2>&1"]
+CMD ["sudo", "./fastwebserver-runner.sh", ">", "server.logs", "2>&1"]
