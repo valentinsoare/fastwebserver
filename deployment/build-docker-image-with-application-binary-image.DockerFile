@@ -21,6 +21,9 @@ VOLUME application-storage:/home/custom-application
 # Set the working directory to /home/custom-application/fastwebserver
 WORKDIR /home/custom-application/fastwebserver
 
+# Set exec on running bash script
+RUN chmod +x fastwebserver-runner.sh
+
 # Define the command to run the application
 # The application logs are redirected to server.logs
 CMD ["./fastwebserver-runner.sh", ">", "server.logs", "2>&1"]
