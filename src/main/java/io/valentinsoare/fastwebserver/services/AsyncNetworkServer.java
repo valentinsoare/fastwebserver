@@ -18,7 +18,7 @@ import java.util.Set;
  */
 
 public class AsyncNetworkServer {
-    private int connectionPort;
+    private final int connectionPort;
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private SelectionKey serverSocketChannelKey;
@@ -150,9 +150,5 @@ public class AsyncNetworkServer {
         } catch (IOException e) {
             System.err.printf("%n \033[31mERROR: Failed to close resources. %s.\033[0m%n%n", e.getMessage());
         }
-    }
-
-    public int getConnectionPort() {
-        return connectionPort;
     }
 }
