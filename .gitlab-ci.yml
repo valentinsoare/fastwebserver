@@ -72,7 +72,7 @@ test if cloning successfully:
     - printf "\033[1;5;42m %s \033[0m \n" "Execute the script that builds the binary with GraalVM in ${WHERE} environment"
     - ./deployment/build-binary-image.sh
     - cd ${PATH_FOR_ARTIFACTS}/target
-    - sudo sed -i s/version/"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}"/g /etc/sudoers
+    - sed -i 's/version/"${APP_VERSION}"-"${CI_COMMIT_SHORT_SHA}"/g' /etc/sudoers
   artifacts:
     paths:
       - "${PATH_FOR_ARTIFACTS}"
