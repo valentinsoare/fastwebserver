@@ -99,7 +99,7 @@ public class AsyncNetworkServer {
                         .append("Content-Type: text/plain\r\n")
                         .append("Connection: keep-alive\r\n")
                         .append("\r\n")
-                        .append(" Connection to the server is successful!!\r\n");
+                        .append(String.format("%s\r%n", "Client connected!"));
 
                 clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
