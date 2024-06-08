@@ -182,7 +182,7 @@ build application image for staging:
 build application binary for production:
   stage: Production
   environment:
-    name: alexandru.vladu@gmail.com
+    name: Production
   variables:
     WHERE: production
   <<: *buildapplicationbinary
