@@ -1,6 +1,7 @@
 package io.valentinsoare.fastwebserver.runner;
 
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
+import io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService;
 import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import java.util.*;
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private final ServerOptionsExecutionTime serverOptionsExecutionTime;
+    private CustomMetricService metricService;
 
     @Autowired
-    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime) {
+    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, CustomMetricService metricService) {
         this.serverOptionsExecutionTime = serverOptionsExecutionTime;
+        this.metricService = metricService;
     }
 
     /**
@@ -93,7 +96,8 @@ public class ApplicationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
-        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(optionsToBeUsedOnServer.get("port")));
+        AsyncNetworkServer asyncNetworkServer =
+                new AsyncNetworkServer(validatePortAsAnOption(optionsToBeUsedOnServer.get("port")), metricService);
 
         asyncNetworkServer.runServer();
     }

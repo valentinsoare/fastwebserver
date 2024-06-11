@@ -1,5 +1,7 @@
 package io.valentinsoare.fastwebserver.services;
 
+import io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
@@ -9,6 +11,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -26,12 +29,17 @@ public class AsyncNetworkServer {
     private ServerSocketChannel serverSocketChannelForClientConnection;
     private SocketChannel socketChannelForClient;
 
+    private CustomMetricService metricService;
+
+
     /**
      * Constructor for the AsyncNetworkServer.
      * It initializes the server socket channel, sets the socket options, binds it to a port, and opens a selector.
      */
-    public AsyncNetworkServer(int connectionPort) {
+    public AsyncNetworkServer(int connectionPort, CustomMetricService metricService) {
         this.connectionPort = connectionPort;
+        this.metricService = metricService;
+
 
         try {
             serverSocketChannel = ServerSocketChannel.open();
@@ -91,7 +99,13 @@ public class AsyncNetworkServer {
 
                 buffer.flip();
                 String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
+
+                long receivedTime = System.currentTimeMillis();
                 System.out.printf("%n Received request: %n%s.", requestData);
+
+                metricService.incrementHttpTotalRequests();
+
+                metricService.incrementHttpRequestsInProgress();
 
                 StringBuilder answer = new StringBuilder();
 
@@ -102,6 +116,12 @@ public class AsyncNetworkServer {
                         .append(String.format("%s\r%n", "Client connected!"));
 
                 clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
+
+                metricService.getResponseTimeSetter()
+                        .record(Duration.ofMillis(System.currentTimeMillis() - receivedTime));
+
+                metricService.setLastHttpRequestServed();
+                metricService.decrementHttpRequestsInProgress();
 
                 buffer.clear();
 //                key.cancel();
