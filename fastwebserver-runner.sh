@@ -14,3 +14,4 @@ printf "\033[32m%s\033[0m\n" " Stopping the server"
 
 # Print a newline after the app exited.
 printf "\n\n"
+s
