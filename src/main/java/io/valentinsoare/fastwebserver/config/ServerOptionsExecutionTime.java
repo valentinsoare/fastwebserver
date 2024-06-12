@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServerOptionsExecutionTime {
-    // The Options instance that will hold the options available for the application
     private Options requiredOptions;
 
     public ServerOptionsExecutionTime() {

@@ -1,6 +1,7 @@
 package io.valentinsoare.fastwebserver;
 
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime__BeanDefinitions;
+import io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService__BeanDefinitions;
 import io.valentinsoare.fastwebserver.runner.ApplicationRunner__BeanDefinitions;
 import org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator__BeanDefinitions;
 import org.springframework.aot.generate.Generated;
@@ -125,6 +126,7 @@ public class FastWebApplication__BeanFactoryRegistrations {
     beanFactory.registerBeanDefinition("org.springframework.context.event.internalEventListenerFactory", DefaultEventListenerFactory__BeanDefinitions.getInternalEventListenerFactoryBeanDefinition());
     beanFactory.registerBeanDefinition("fastWebApplication", FastWebApplication__BeanDefinitions.getFastWebApplicationBeanDefinition());
     beanFactory.registerBeanDefinition("serverOptionsExecutionTime", ServerOptionsExecutionTime__BeanDefinitions.getServerOptionsExecutionTimeBeanDefinition());
+    beanFactory.registerBeanDefinition("customMetricService", CustomMetricService__BeanDefinitions.getCustomMetricServiceBeanDefinition());
     beanFactory.registerBeanDefinition("applicationRunner", ApplicationRunner__BeanDefinitions.getApplicationRunnerBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.AutoConfigurationPackages", AutoConfigurationPackages__BeanDefinitions.BasePackages.getAutoConfigurationPackagesBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration", PropertyPlaceholderAutoConfiguration__BeanDefinitions.getPropertyPlaceholderAutoConfigurationBeanDefinition());

@@ -1,4 +1,4 @@
-io/valentinsoare/fastwebserver/services/AsyncNetworkServer.class
 io/valentinsoare/fastwebserver/runner/ApplicationRunner.class
-io/valentinsoare/fastwebserver/FastWebApplication.class
 io/valentinsoare/fastwebserver/config/ServerOptionsExecutionTime.class
+io/valentinsoare/fastwebserver/services/AsyncNetworkServer.class
+io/valentinsoare/fastwebserver/FastWebApplication.class

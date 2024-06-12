@@ -1,0 +1,13 @@
+[Unit]
+Description=FastWebServer
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/env /home/vsoare/Documents/fastwebserver --port 8080
+Restart=on-failure
+RestartSec=5s
+StartLimitBurst=5
+User=root
+
+[Install]
+WantedBy=multi-user.target

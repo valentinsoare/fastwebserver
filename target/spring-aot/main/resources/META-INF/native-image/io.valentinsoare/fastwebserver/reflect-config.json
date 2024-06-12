@@ -295,6 +295,19 @@
     ]
   },
   {
+    "name": "io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService",
+    "queryAllPublicMethods": true,
+    "queryAllDeclaredMethods": true,
+    "queriedMethods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "io.micrometer.core.instrument.MeterRegistry"
+        ]
+      }
+    ]
+  },
+  {
     "name": "io.valentinsoare.fastwebserver.runner.ApplicationRunner",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
@@ -302,7 +315,8 @@
       {
         "name": "<init>",
         "parameterTypes": [
-          "io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime"
+          "io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime",
+          "io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService"
         ]
       }
     ]
