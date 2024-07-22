@@ -10,12 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-
-/**
- * This class is a runner for the application.
- * It implements the CommandLineRunner interface, which indicates that a bean should run when it is contained within a SpringApplication.
- * A Spring Boot application will call the run method of all beans implementing this interface after the application context has been loaded.
- */
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private final ServerOptionsExecutionTime serverOptionsExecutionTime;
@@ -27,14 +21,6 @@ public class ApplicationRunner implements CommandLineRunner {
         this.metricService = metricService;
     }
 
-    /**
-     * This method extracts options from user input.
-     * It parses the command line arguments and extracts the options and their values.
-     * If no options are provided, it defaults to port 8080.
-     *
-     * @param arguments The command line arguments
-     * @return A map of options and their values
-     */
     private Map<String, String> extractOptionsFromUserInput(String[] arguments) {
         List<String> optionsFromUserInput = new ArrayList<>();
         List<String> valuesFromUserInput = Collections.emptyList();
@@ -79,20 +65,13 @@ public class ApplicationRunner implements CommandLineRunner {
 
             return i;
         } catch (NumberFormatException e) {
-            System.out.printf("%n \033[1;31m%s%n %s\033[0m%n", e.getMessage(),
-                    "Port should be a integer value. In this case it will default to 8080.");
+            System.out.printf("%n \033[1;31m %s\033[0m%n%n",
+                    "Port should be a integer value. In this case it will default to 8080!");
         }
 
         return 8080;
     }
 
-    /**
-     * This method is the entry point for the runner.
-     * It is called after the application context is loaded and just before SpringApplication.run(…) completes.
-     * It starts the AsyncNetworkServer.
-     *
-     * @param args Array of strings representing command line arguments.
-     */
     @Override
     public void run(String... args) {
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);

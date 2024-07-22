@@ -6,7 +6,7 @@
 curl localhost:8080 &
 
 # Sleep for 0.2 seconds to give the curl command time to start.
-sleep 0.2
+#sleep 0.1
 
 # Use pgrep to find the process ID of the curl command and kill it. This effectively cancels the request.
 kill -9 $(pgrep curl)

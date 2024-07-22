@@ -15,11 +15,6 @@ import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * This service class represents an asynchronous network server.
- * It uses non-blocking I/O and a selector to handle multiple network connections.
- */
-
 public class AsyncNetworkServer {
     private final int connectionPort;
     private ServerSocketChannel serverSocketChannel;
@@ -32,10 +27,6 @@ public class AsyncNetworkServer {
     private CustomMetricService metricService;
 
 
-    /**
-     * Constructor for the AsyncNetworkServer.
-     * It initializes the server socket channel, sets the socket options, binds it to a port, and opens a selector.
-     */
     public AsyncNetworkServer(int connectionPort, CustomMetricService metricService) {
         this.connectionPort = connectionPort;
         this.metricService = metricService;
@@ -61,13 +52,6 @@ public class AsyncNetworkServer {
         }
     }
 
-    /**
-     * Here we are handling the incoming requests from the clients.
-     * We iterate over the selected keys, checks if the key is acceptable or readable, and performs the appropriate action.
-     *
-     * @param keyIterator Iterator for the selected keys.
-     * @throws IOException If an I/O error occurs.
-     */
     private void workOnRequest(Iterator<SelectionKey> keyIterator) throws IOException {
         while (keyIterator.hasNext()) {
             SelectionKey key = keyIterator.next();
@@ -113,7 +97,7 @@ public class AsyncNetworkServer {
                         .append("Content-Type: text/plain\r\n")
                         .append("Connection: keep-alive\r\n")
                         .append("\r\n")
-                        .append(String.format("%s\r%n", "Client connected!"));
+                        .append(String.format("%s\r%n", "hello from machine!"));
 
                 clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
@@ -130,10 +114,6 @@ public class AsyncNetworkServer {
         }
     }
 
-    /**
-     * This method starts the server and keeps it running to accept and handle incoming connections.
-     * It continuously selects the ready keys and calls the workOnRequest method to handle the requests.
-     */
     public void runServer() {
         try  {
             while (true) {
@@ -155,9 +135,6 @@ public class AsyncNetworkServer {
         }
     }
 
-    /**
-     * This method closes the resources (selector and server socket channel) when they are no longer needed.
-     */
     private void closeResources() {
         try {
             if (selector != null) {

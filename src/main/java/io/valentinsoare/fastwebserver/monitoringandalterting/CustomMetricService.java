@@ -9,11 +9,6 @@ import java.time.ZoneId;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-
-/**
- * This class is responsible for managing custom metrics for the application.
- * It uses the Micrometer library to create and manage the metrics.
- */
 @Component
 public class CustomMetricService {
     private final Counter httpRequests;
@@ -21,12 +16,6 @@ public class CustomMetricService {
     private final AtomicLong lastHttpRequestServed;
     private final Timer responseTime;
 
-
-    /**
-     * Constructor that sets up the metrics.
-     *
-     * @param meterRegistry The MeterRegistry instance used to register the metrics
-     */
     @Autowired
     public CustomMetricService(MeterRegistry meterRegistry) {
         this.httpRequests = Counter.builder("httpRequests")
@@ -52,30 +41,18 @@ public class CustomMetricService {
                 .register(meterRegistry);
     }
 
-    /**
-     * This method increments the total number of HTTP requests.
-     */
     public void incrementHttpTotalRequests() {
         httpRequests.increment();
     }
 
-    /**
-     * This method increments the number of HTTP requests in progress.
-     */
     public void incrementHttpRequestsInProgress() {
         httpRequestsInProgress.getAndIncrement();
     }
 
-    /**
-     * This method decrements the number of HTTP requests in progress.
-     */
     public void decrementHttpRequestsInProgress() {
         httpRequestsInProgress.getAndDecrement();
     }
 
-    /**
-     * This method sets the time of the last HTTP request served.
-     */
     public void setLastHttpRequestServed() {
         LocalDateTime time = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();
@@ -84,11 +61,6 @@ public class CustomMetricService {
         lastHttpRequestServed.set(epochSecond);
     }
 
-    /**
-     * This method returns the Timer instance that measures the response time.
-     *
-     * @return The Timer instance
-     */
     public Timer getResponseTimeSetter() {
         return responseTime;
     }
