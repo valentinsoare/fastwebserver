@@ -62,16 +62,17 @@ public class AsyncNetworkServer {
                 socketChannelForClient = serverSocketChannelForClientConnection.accept();
 
                 socketChannelForClient.configureBlocking(false);
-                socketChannelForClient.register(selector, SelectionKey.OP_READ);
+                socketChannelForClient.register(selector, SelectionKey.OP_READ, SelectionKey.OP_WRITE);
                 socketChannelForClient.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 
                 System.out.printf("%n%n New client connected: %s.", socketChannelForClient.socket().getRemoteSocketAddress());
 //                socketChannelForClient.setOption(StandardSocketOptions.TCP_NODELAY, true);  // Enable Nagle algorithm for better performance.
-//                socketChannelForClient.setOption(StandardSocketOptions.SO_LINGER, 0);   // Reset connection from the server and avoid TIME_WAIT on the server.
+//                socketChannelForClient.setOption(StandardSocketOptions.SO_LINGER, 0);   // Reset connection from the server.
             } else if (key.isReadable()) {
                 SocketChannel clientChannel = (SocketChannel) key.channel();
 
-                ByteBuffer buffer = ByteBuffer.allocate(1024);
+                //10 MB buffer by default
+                ByteBuffer buffer = ByteBuffer.allocate((int)(10 * Math.pow(1024, 2)));
                 int bytesRead = clientChannel.read(buffer);
 
                 if (bytesRead == -1) {
@@ -108,8 +109,6 @@ public class AsyncNetworkServer {
                 metricService.decrementHttpRequestsInProgress();
 
                 buffer.clear();
-//                key.cancel();
-//                clientChannel.close();
             }
         }
     }
@@ -117,11 +116,7 @@ public class AsyncNetworkServer {
     public void runServer() {
         try  {
             while (true) {
-                int selectedKeysCount = selector.select();
-
-                if (selectedKeysCount == 0) {
-                    continue;
-                }
+                selector.select();
 
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
@@ -129,7 +124,7 @@ public class AsyncNetworkServer {
                 workOnRequest(keyIterator);
             }
         } catch (IOException e) {
-            System.out.printf("%n \033[31mERROR: Issues with handling the web connections. %s.\033[0m%n%n", e.getMessage());
+            System.out.printf("%n \033[31mERROR: Issues when handling the web connections. %s.\033[0m%n%n", e.getMessage());
         } finally {
             closeResources();
         }
