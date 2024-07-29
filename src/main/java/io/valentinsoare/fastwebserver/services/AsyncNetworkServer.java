@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class AsyncNetworkServer {
-    private final int connectionPort;
+    private int connectionPort;
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private SelectionKey serverSocketChannelKey;

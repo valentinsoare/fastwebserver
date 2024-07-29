@@ -75,8 +75,7 @@ public class ApplicationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
-        AsyncNetworkServer asyncNetworkServer =
-                new AsyncNetworkServer(validatePortAsAnOption(optionsToBeUsedOnServer.get("port")), metricService);
+        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(optionsToBeUsedOnServer.get("port")), metricService);
 
         asyncNetworkServer.runServer();
     }
