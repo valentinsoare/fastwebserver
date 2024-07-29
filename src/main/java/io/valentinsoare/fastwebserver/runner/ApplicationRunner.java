@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.PrintWriter;
 import java.util.*;
 
 @Component
@@ -70,6 +71,21 @@ public class ApplicationRunner implements CommandLineRunner {
         }
 
         return 8080;
+    }
+
+    public void printHelp(Options options) {
+        HelpFormatter helpFormatter = new HelpFormatter();
+
+        try (PrintWriter printWriter = new PrintWriter(System.out)) {
+            printWriter.printf("%nfastwebserver v0.0.1%n");
+
+            printWriter.printf("%n%sn%n", "Simple webserver written in Java 17 and Spring Boot as an asynchrounous and concurrent application made with Java Non-Blocking IO library. ");
+            helpFormatter.printUsage(printWriter, 100, "./fastwebserver [OPTION]...");
+            helpFormatter.printOptions(printWriter, 100, options, 2, 5);
+            printWriter.printf("%n%s%n%n", "FastWebServer was written by Valentin Soare.\nPlease report any bugs to soarevalentinn@gmail.com.");
+        }
+
+        System.exit(0);
     }
 
     @Override
