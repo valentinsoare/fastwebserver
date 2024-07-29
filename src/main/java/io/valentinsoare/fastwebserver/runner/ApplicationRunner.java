@@ -13,7 +13,7 @@ import java.util.*;
 
 @Component
 public class ApplicationRunner implements CommandLineRunner {
-    private final ServerOptionsExecutionTime serverOptionsExecutionTime;
+    private ServerOptionsExecutionTime serverOptionsExecutionTime;
     private CustomMetricService metricService;
 
     @Autowired
@@ -43,14 +43,16 @@ public class ApplicationRunner implements CommandLineRunner {
             System.exit(1);
         }
 
-        if ((optionsFromUserInput.isEmpty()) || (optionsFromUserInput.size() != valuesFromUserInput.size())) {
-            return Map.of("port", "8080");
-        }
-
         Map<String, String> returnForOptions = new HashMap<>();
 
-        for (int i = 0; i < optionsFromUserInput.size(); i++) {
-            returnForOptions.put(optionsFromUserInput.get(i), valuesFromUserInput.get(i));
+        if (optionsFromUserInput.isEmpty()) {
+            return Map.of("port", "8080");
+        } else if (!valuesFromUserInput.isEmpty()) {
+            for (int i = 0; i < optionsFromUserInput.size(); i++) {
+                returnForOptions.put(optionsFromUserInput.get(i), valuesFromUserInput.get(i));
+            }
+        } else {
+            returnForOptions.put("help", "enabled");
         }
 
         return returnForOptions;
@@ -73,13 +75,13 @@ public class ApplicationRunner implements CommandLineRunner {
         return 8080;
     }
 
-    public void printHelp(Options options) {
+    private void printHelp(Options options) {
         HelpFormatter helpFormatter = new HelpFormatter();
 
         try (PrintWriter printWriter = new PrintWriter(System.out)) {
             printWriter.printf("%nfastwebserver v0.0.1%n");
 
-            printWriter.printf("%n%sn%n", "Simple webserver written in Java 17 and Spring Boot as an asynchrounous and concurrent application made with Java Non-Blocking IO library. ");
+            printWriter.printf("%n%s%n", "Simple webserver written in Java 17 and Spring Boot as an asynchrounous and concurrent application made with Java Non-Blocking IO library. ");
             helpFormatter.printUsage(printWriter, 100, "./fastwebserver [OPTION]...");
             helpFormatter.printOptions(printWriter, 100, options, 2, 5);
             printWriter.printf("%n%s%n%n", "FastWebServer was written by Valentin Soare.\nPlease report any bugs to soarevalentinn@gmail.com.");
@@ -88,11 +90,23 @@ public class ApplicationRunner implements CommandLineRunner {
         System.exit(0);
     }
 
+    private void runTheNetworkServer(Map<String, String> givenOptions) {
+        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(givenOptions.get("port")), metricService);
+        asyncNetworkServer.runServer();
+    }
+
+    private void executeAppWithOptionsGiven(Map<String, String> givenOptions) {
+        for (Map.Entry<String, String> option : givenOptions.entrySet()) {
+            switch (option.getKey()) {
+                case "help" -> printHelp(serverOptionsExecutionTime.getRequiredOptions());
+                case "port" -> runTheNetworkServer(givenOptions);
+            }
+        }
+    }
+
     @Override
     public void run(String... args) {
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
-        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(optionsToBeUsedOnServer.get("port")), metricService);
-
-        asyncNetworkServer.runServer();
+        executeAppWithOptionsGiven(optionsToBeUsedOnServer);
     }
 }
