@@ -25,10 +25,10 @@ public class ServerOptionsExecutionTime {
         this.requiredOptions = new Options();
 
         Option port = createOption("p", "port", "port on which the server will listen for incoming connections.");
-        requiredOptions.addOption(port);
-
         Option help = createOption("h", "help", "print the help page of the application.");
-        requiredOptions.addOption(help);
+
+        requiredOptions.addOption(port)
+                .addOption(help);
     }
 
     public Options getRequiredOptions() {
