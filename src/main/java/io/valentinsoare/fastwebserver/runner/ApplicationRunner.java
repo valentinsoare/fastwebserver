@@ -39,7 +39,7 @@ public class ApplicationRunner implements CommandLineRunner {
 
             valuesFromUserInput = new ArrayList<>(Arrays.asList(commandLine.getArgs()));
         } catch (ParseException e) {
-            System.out.printf("%n \033[1;31m%s\033[0m%n%n", e.getMessage());
+            System.out.printf("%n \033[1;31mERROR - %s\033[0m%n%n", e.getMessage());
             System.exit(1);
         }
 
