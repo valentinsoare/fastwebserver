@@ -82,7 +82,7 @@ public class ApplicationRunner implements CommandLineRunner {
             printWriter.printf("%nWelcome!%n");
 
             printWriter.printf("%n%s%n%s%n%n", "Simple webserver written in Java 17 and Spring Boot as an asynchrounous and concurrent application made with Java Non-Blocking IO library.", "" +
-                    "Spring Boot modules used: Lombok, Actuator, Micrometer-Registry-Prometheus, Commons-cli.");
+                    "Spring Boot modules used: Lombok, Actuator, Micrometer-Registry-Prometheus, Commons-cli`.");
             helpFormatter.printUsage(printWriter, 100, "./fastwebserver [OPTION]...");
             helpFormatter.printOptions(printWriter, 100, options, 2, 5);
             printWriter.printf("%n%s%n%n", "FastWebServer was written by Valentin Soare.\nPlease report any bugs to soarevalentinn@gmail.com.");
