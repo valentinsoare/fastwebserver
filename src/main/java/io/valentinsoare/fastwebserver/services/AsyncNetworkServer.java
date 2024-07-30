@@ -36,7 +36,7 @@ public class AsyncNetworkServer {
             serverSocketChannel = ServerSocketChannel.open();
 
             serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
-            serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEPORT, true);
+//            serverSocketChannel.setOption(StandardSocketOptions.SO_REUSEPORT, true); // this is only available for linux
 
             serverSocketChannel.bind(new InetSocketAddress(connectionPort));
             serverSocketChannel.configureBlocking(false);
@@ -44,8 +44,7 @@ public class AsyncNetworkServer {
             selector = Selector.open();
 
             serverSocketChannelKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.printf("Server started on port %s...", connectionPort);
-
+            System.out.printf(" Server started on port %s...", connectionPort);
         } catch (IOException e) {
             System.out.printf("%n\033[31m ERROR: Issues in the init phase of the web server. %s.%n%n\033[0m", e.getMessage());
             System.exit(1);
@@ -71,8 +70,8 @@ public class AsyncNetworkServer {
             } else if (key.isReadable()) {
                 SocketChannel clientChannel = (SocketChannel) key.channel();
 
-                //10 MB buffer by default
-                ByteBuffer buffer = ByteBuffer.allocate((int)(10 * Math.pow(1024, 2)));
+                //1 MB buffer by default.
+                ByteBuffer buffer = ByteBuffer.allocate(1024 * 1024);
                 int bytesRead = clientChannel.read(buffer);
 
                 if (bytesRead == -1) {
