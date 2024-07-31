@@ -308,6 +308,17 @@
     ]
   },
   {
+    "name": "io.valentinsoare.fastwebserver.outputformat.FormatOutput",
+    "queryAllPublicMethods": true,
+    "queryAllDeclaredMethods": true,
+    "queriedMethods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [ ]
+      }
+    ]
+  },
+  {
     "name": "io.valentinsoare.fastwebserver.runner.ApplicationRunner",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,

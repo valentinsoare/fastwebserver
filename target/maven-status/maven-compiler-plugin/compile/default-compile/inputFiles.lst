@@ -1,4 +1,9 @@
+/home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/typeofoutput/successwithouterror/SuccessMessage.java
+/home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/typeofoutput/exceptionsanderrors/ErrorMessage.java
+/home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/outputformat/FormatOutput.java
 /home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/FastWebApplication.java
+/home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/outputformat/ColorOutput.java
+/home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/typeofoutput/exceptionsanderrors/Severity.java
 /home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/services/AsyncNetworkServer.java
 /home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/config/ServerOptionsExecutionTime.java
 /home/vsoare/Documents/projectsLongTerm/fastwebserver/src/main/java/io/valentinsoare/fastwebserver/monitoringandalterting/CustomMetricService.java

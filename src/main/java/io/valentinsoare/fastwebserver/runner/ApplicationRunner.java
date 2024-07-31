@@ -40,7 +40,8 @@ public class ApplicationRunner implements CommandLineRunner {
 
             valuesFromUserInput = new ArrayList<>(Arrays.asList(commandLine.getArgs()));
         } catch (ParseException e) {
-            System.out.printf("%n \033[1;31mERROR - %s\033[0m%n%n", e.getMessage());
+            System.out.printf("%n %sERROR - %s%s%n%n",
+                    ColorOutput.ERROR.getTypeOfColor(), e.getMessage(), ColorOutput.OFF_COLOR.getTypeOfColor());
             System.exit(1);
         }
 
@@ -69,8 +70,8 @@ public class ApplicationRunner implements CommandLineRunner {
 
             return i;
         } catch (NumberFormatException e) {
-            System.out.printf("%n \033[1;31m %s\033[0m%n%n",
-                    "Port should be a integer value. In this case it will default to 8080!");
+            System.out.printf("%n %s %s%s%n%n", ColorOutput.ERROR.getTypeOfColor(),
+                    "Port should be a integer value. In this case it will default to 8080!", ColorOutput.OFF_COLOR.getTypeOfColor());
         }
 
         return 8080;

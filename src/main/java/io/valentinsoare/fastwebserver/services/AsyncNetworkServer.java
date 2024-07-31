@@ -1,6 +1,7 @@
 package io.valentinsoare.fastwebserver.services;
 
 import io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService;
+import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -44,9 +45,11 @@ public class AsyncNetworkServer {
             selector = Selector.open();
 
             serverSocketChannelKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.printf(" Server started on port %s...", connectionPort);
+            System.out.printf(" %sServer started on port %s...%s",
+                    ColorOutput.SUCCESS.getTypeOfColor(), connectionPort, ColorOutput.OFF_COLOR.getTypeOfColor());
         } catch (IOException e) {
-            System.out.printf("%n\033[31m ERROR: Issues in the init phase of the web server. %s.%n%n\033[0m", e.getMessage());
+            System.out.printf("%n%s ERROR: Issues in the init phase of the web server. %s.%n%n%s",
+                    ColorOutput.ERROR.getTypeOfColor(), e.getMessage(), ColorOutput.OFF_COLOR.getTypeOfColor());
             System.exit(1);
         }
     }
@@ -64,7 +67,8 @@ public class AsyncNetworkServer {
                 socketChannelForClient.register(selector, SelectionKey.OP_READ, SelectionKey.OP_WRITE);
                 socketChannelForClient.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
 
-                System.out.printf("%n%n New client connected: %s.", socketChannelForClient.socket().getRemoteSocketAddress());
+                System.out.printf("%n%n %sNew client connected: %s.%s",
+                        ColorOutput.SUCCESS.getTypeOfColor(), socketChannelForClient.socket().getRemoteSocketAddress(), ColorOutput.OFF_COLOR.getTypeOfColor());
 //                socketChannelForClient.setOption(StandardSocketOptions.TCP_NODELAY, true);  // Enable Nagle algorithm for better performance.
 //                socketChannelForClient.setOption(StandardSocketOptions.SO_LINGER, 0);   // Reset connection from the server.
             } else if (key.isReadable()) {
@@ -76,7 +80,8 @@ public class AsyncNetworkServer {
 
                 if (bytesRead == -1) {
                     clientChannel.close();
-                    System.out.println("\n Client disconnected.");
+                    System.out.printf("%n %sClient disconnected.%s%n",
+                            ColorOutput.SUCCESS.getTypeOfColor(), ColorOutput.OFF_COLOR.getTypeOfColor());
                     key.cancel();
                     continue;
                 }
@@ -85,7 +90,8 @@ public class AsyncNetworkServer {
                 String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
 
                 long receivedTime = System.currentTimeMillis();
-                System.out.printf("%n Received request: %n%s.", requestData);
+                System.out.printf("%n %sReceived request: %n%s.%s",
+                        ColorOutput.SUCCESS.getTypeOfColor(), requestData, ColorOutput.OFF_COLOR.getTypeOfColor());
 
                 metricService.incrementHttpTotalRequests();
 
@@ -123,7 +129,8 @@ public class AsyncNetworkServer {
                 workOnRequest(keyIterator);
             }
         } catch (IOException e) {
-            System.out.printf("%n \033[31mERROR: Issues when handling the web connections. %s.\033[0m%n%n", e.getMessage());
+            System.out.printf("%n %sERROR: Issues when handling the web connections. %s.%s%n%n",
+                    ColorOutput.ERROR.getTypeOfColor(), e.getMessage(), ColorOutput.OFF_COLOR.getTypeOfColor());
         } finally {
             closeResources();
         }
@@ -139,7 +146,8 @@ public class AsyncNetworkServer {
                 serverSocketChannel.close();
             }
         } catch (IOException e) {
-            System.err.printf("%n \033[31mERROR: Failed to close resources. %s.\033[0m%n%n", e.getMessage());
+            System.err.printf("%n %sERROR: Failed to close resources. %s.%s%n%n",
+                    ColorOutput.ERROR.getTypeOfColor(), e.getMessage(), ColorOutput.OFF_COLOR.getTypeOfColor());
         }
     }
 }
