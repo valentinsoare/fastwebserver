@@ -71,7 +71,7 @@ public class ApplicationRunner implements CommandLineRunner {
             return i;
         } catch (NumberFormatException e) {
             System.out.printf("%n %s %s%s%n%n", ColorOutput.ERROR.getTypeOfColor(),
-                    "Port should be a integer value. In this case it will default to 8080!", ColorOutput.OFF_COLOR.getTypeOfColor());
+                    "Port should be a integer value greater than 1024. In this case it will default to 8080!", ColorOutput.OFF_COLOR.getTypeOfColor());
         }
 
         return 8080;
