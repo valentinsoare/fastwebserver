@@ -1,6 +1,6 @@
 package io.valentinsoare.fastwebserver.typeofoutput.successwithouterror;
 
-import io.valentinsoare.fastwebserver.typeofoutput.exceptionsanderrors.Severity;
+import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import lombok.Builder;
 import lombok.Data;
 
@@ -24,9 +24,14 @@ public class SuccessMessage {
         this.dateTime = dateTime;
     }
 
+    public void changeColorClazzNameAndMethodName(ColorOutput color) {
+        this.clazzName = String.format("%s%s%s", color.getTypeOfColor(), clazzName, ColorOutput.OFF_COLOR);
+        this.methodName = String.format("%s%s%s", color.getTypeOfColor(), methodName, ColorOutput.OFF_COLOR);
+    }
+
     @Override
     public String toString() {
-        return String.format("ClazzName: %s, MethodName: %s, ThreadName: %s, Message: %s, DateTime: %s",
-                clazzName, methodName, threadName, message, dateTime);
+        return String.format("%s, %s, %s, %s, %s",
+                dateTime, clazzName, methodName, threadName, message);
     }
 }
