@@ -107,7 +107,7 @@ public class AsyncNetworkServer {
 
                 int numberOfBytesSend = clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
-                metricService.getResponseTimeSetter()
+                metricService.getResponseTime()
                         .record(Duration.ofMillis(Instant.now().toEpochMilli() - receivedTime));
 
                 if (numberOfBytesSend > 0) {
