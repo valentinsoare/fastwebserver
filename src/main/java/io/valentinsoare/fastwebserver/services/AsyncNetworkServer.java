@@ -1,6 +1,7 @@
 package io.valentinsoare.fastwebserver.services;
 
-import io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService;
+import io.micrometer.core.instrument.Measurement;
+import io.micrometer.core.instrument.Timer;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 
 import java.io.IOException;
@@ -13,10 +14,9 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class AsyncNetworkServer {
     private int connectionPort;
@@ -27,10 +27,10 @@ public class AsyncNetworkServer {
     private ServerSocketChannel serverSocketChannelForClientConnection;
     private SocketChannel socketChannelForClient;
 
-    private CustomMetricService metricService;
+    private CustomMetric metricService;
 
 
-    public AsyncNetworkServer(int connectionPort, CustomMetricService metricService) {
+    public AsyncNetworkServer(int connectionPort, CustomMetric metricService) {
         this.connectionPort = connectionPort;
         this.metricService = metricService;
 
@@ -91,11 +91,11 @@ public class AsyncNetworkServer {
                 buffer.flip();
                 String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
 
-                long receivedTime = Instant.now().toEpochMilli();
+                long receivedTime = System.currentTimeMillis();
                 System.out.printf("%n %sReceived request: %n%s.%s",
                         ColorOutput.SUCCESS.getTypeOfColor(), requestData, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-                metricService.incrementHttpRequests();
+                metricService.getHomeEndPointMetrics().incrementHttpRequests();
 
                 StringBuilder answer = new StringBuilder();
 
@@ -107,17 +107,14 @@ public class AsyncNetworkServer {
 
                 int numberOfBytesSend = clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
-                metricService.getResponseTime()
-                        .record(Duration.ofMillis(Instant.now().toEpochMilli() - receivedTime));
+                long howLong = Duration.ofMillis(System.currentTimeMillis() - receivedTime).toMillis();
+                metricService.getHomeEndPointMetrics().getHttp_server_response_time()
+                        .record(howLong, TimeUnit.MILLISECONDS);
 
                 if (numberOfBytesSend > 0) {
-                    metricService.setLastHttpRequestSuccess();
-                    metricService.incrementHttpRequestsWithSuccess();
-                    metricService.decrementHttpRequestsWithFailure();
+                    metricService.getHomeEndPointMetrics().incrementHttpRequestsWithSuccess();
                 } else {
-                    metricService.setLastHttpRequestFailed();
-                    metricService.incrementHttpRequestsWithFailure();
-                    metricService.decrementHttpRequestsWithSuccess();
+                    metricService.getHomeEndPointMetrics().incrementHttpRequestsWithFailure();
                 }
 
                 buffer.clear();

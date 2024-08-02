@@ -1,7 +1,7 @@
 package io.valentinsoare.fastwebserver.runner;
 
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
-import io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService;
+import io.valentinsoare.fastwebserver.services.CustomMetric;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
 import org.apache.commons.cli.*;
@@ -15,10 +15,10 @@ import java.util.*;
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private ServerOptionsExecutionTime serverOptionsExecutionTime;
-    private CustomMetricService metricService;
+    private CustomMetric metricService;
 
     @Autowired
-    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, CustomMetricService metricService) {
+    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, CustomMetric metricService) {
         this.serverOptionsExecutionTime = serverOptionsExecutionTime;
         this.metricService = metricService;
     }
