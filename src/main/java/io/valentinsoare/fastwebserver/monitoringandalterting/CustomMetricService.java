@@ -1,6 +1,7 @@
 package io.valentinsoare.fastwebserver.monitoringandalterting;
 
 import io.micrometer.core.instrument.*;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,7 @@ import java.time.ZoneId;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Getter
 @Component
 public class CustomMetricService {
     private final AtomicInteger httpRequests;
@@ -105,9 +107,5 @@ public class CustomMetricService {
 
     public void decrementHttpRequestsWithFailure() {
         httpRequestsFailed.getAndDecrement();
-    }
-
-    public Timer getResponseTimeSetter() {
-        return responseTime;
     }
 }
