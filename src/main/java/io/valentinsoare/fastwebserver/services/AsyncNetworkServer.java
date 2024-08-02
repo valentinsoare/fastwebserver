@@ -16,6 +16,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.UUID;
 
 public class AsyncNetworkServer {
     private int connectionPort;
@@ -111,6 +112,12 @@ public class AsyncNetworkServer {
 
                 if (numberOfBytesSend > 0) {
                     metricService.setLastHttpRequestSuccess();
+                    metricService.incrementHttpRequestsWithSuccess();
+                    metricService.decrementHttpRequestsWithFailure();
+                } else {
+                    metricService.setLastHttpRequestFailed();
+                    metricService.incrementHttpRequestsWithFailure();
+                    metricService.decrementHttpRequestsWithSuccess();
                 }
 
                 buffer.clear();
