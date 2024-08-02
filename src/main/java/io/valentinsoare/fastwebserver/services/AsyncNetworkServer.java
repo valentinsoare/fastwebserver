@@ -13,6 +13,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -89,13 +90,11 @@ public class AsyncNetworkServer {
                 buffer.flip();
                 String requestData = StandardCharsets.UTF_8.decode(buffer).toString().trim();
 
-                long receivedTime = System.currentTimeMillis();
+                long receivedTime = Instant.now().toEpochMilli();
                 System.out.printf("%n %sReceived request: %n%s.%s",
                         ColorOutput.SUCCESS.getTypeOfColor(), requestData, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-                metricService.incrementHttpTotalRequests();
-
-                metricService.incrementHttpRequestsInProgress();
+                metricService.incrementHttpRequests();
 
                 StringBuilder answer = new StringBuilder();
 
@@ -105,13 +104,14 @@ public class AsyncNetworkServer {
                         .append("\r\n")
                         .append(String.format("%s\r%n", "hello from machine!"));
 
-                clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
+                int numberOfBytesSend = clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
                 metricService.getResponseTimeSetter()
-                        .record(Duration.ofMillis(System.currentTimeMillis() - receivedTime));
+                        .record(Duration.ofMillis(Instant.now().toEpochMilli() - receivedTime));
 
-                metricService.setLastHttpRequestServed();
-                metricService.decrementHttpRequestsInProgress();
+                if (numberOfBytesSend > 0) {
+                    metricService.setLastHttpRequestSuccess();
+                }
 
                 buffer.clear();
             }

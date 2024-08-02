@@ -11,29 +11,29 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 public class CustomMetricService {
-    private final Counter httpRequests;
-    private final AtomicInteger httpRequestsInProgress;
-    private final AtomicLong lastHttpRequestServed;
+    private final AtomicInteger httpRequests;
+    private final AtomicLong lastHttpRequestSuccess;
+    private final AtomicLong lastHttpRequestFailed;
+    private final AtomicInteger httpRequestsSuccess;
+    private final AtomicInteger httpRequestsFailed;
     private final Timer responseTime;
 
     @Autowired
     public CustomMetricService(MeterRegistry meterRegistry) {
-        this.httpRequests = Counter.builder("httpRequests")
-                .description("Http Total Requests coming into the server.")
+
+        this.httpRequests = new AtomicInteger();
+        Gauge.builder("httpRequests", httpRequests, AtomicInteger::get )
+                .description("Number of HTTP Requests coming into the server.")
                 .tags("environment", "production", "endpoint", "/")
                 .register(meterRegistry);
 
-        this.httpRequestsInProgress = new AtomicInteger();
-        Gauge.builder("httpRequestsInProgress", httpRequestsInProgress, AtomicInteger::get)
-                .description("Number of HTTP requests in progress.")
-                .tags("environment", "production", "endpoint", "/")
-                .register(meterRegistry);
-
-        this.lastHttpRequestServed = new AtomicLong();
-        Gauge.builder("lastHttpRequestServed", lastHttpRequestServed, AtomicLong::get)
+        this.lastHttpRequestSuccess = new AtomicLong();
+        Gauge.builder("lastHttpRequestSuccess", lastHttpRequestSuccess, AtomicLong::get)
                 .description("Last Http Request Served")
                 .tags("environment", "production", "endpoint", "/")
                 .register(meterRegistry);
+
+        this.lastHttpRequestFailed = new AtomicLong();
 
         this.responseTime = Timer.builder("responseTime")
                 .tags("environment", "production", "endpoint", "/")
@@ -41,24 +41,20 @@ public class CustomMetricService {
                 .register(meterRegistry);
     }
 
-    public void incrementHttpTotalRequests() {
-        httpRequests.increment();
+    public void incrementHttpRequests() {
+        httpRequests.getAndIncrement();
     }
 
-    public void incrementHttpRequestsInProgress() {
-        httpRequestsInProgress.getAndIncrement();
+    public void decrementHttpRequests() {
+        httpRequests.getAndDecrement();
     }
 
-    public void decrementHttpRequestsInProgress() {
-        httpRequestsInProgress.getAndDecrement();
-    }
-
-    public void setLastHttpRequestServed() {
+    public void setLastHttpRequestSuccess() {
         LocalDateTime time = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault();
         long epochSecond = time.atZone(zoneId).toEpochSecond();
 
-        lastHttpRequestServed.set(epochSecond);
+        lastHttpRequestSuccess.set(epochSecond);
     }
 
     public Timer getResponseTimeSetter() {
