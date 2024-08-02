@@ -33,12 +33,6 @@ public class HomeEndPointMetrics {
                 .tags("environment", "production", "endpoint", "/")
                 .register(meterRegistry);
 
-        this.http_server_requests_failure = new AtomicInteger(0);
-        Gauge.builder("http_server_requests_failure", http_server_requests_failure, AtomicInteger::get)
-                .description("Number of HTTP with failure.")
-                .tags("environment", "production", "endpoint", "/")
-                .register(meterRegistry);
-
         this.http_server_response_time = Timer.builder("http_server_response_time")
                 .description("Timer for response time measurements.")
                 .tags("environment", "production", "endpoint", "/")
@@ -59,14 +53,6 @@ public class HomeEndPointMetrics {
 
     public void decrementHttpRequestsWithSuccess() {
         this.http_server_requests_success.getAndDecrement();
-    }
-
-    public void incrementHttpRequestsWithFailure() {
-        this.http_server_requests_failure.getAndIncrement();
-    }
-
-    public void decrementHttpRequestsWithFailure() {
-        this.http_server_requests_failure.getAndDecrement();
     }
 }
 
