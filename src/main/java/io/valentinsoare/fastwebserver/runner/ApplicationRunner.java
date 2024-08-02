@@ -83,7 +83,7 @@ public class ApplicationRunner implements CommandLineRunner {
         try (PrintWriter printWriter = new PrintWriter(System.out)) {
             printWriter.printf("%n%sWelcome!%n", ColorOutput.SUCCESS.getTypeOfColor());
 
-            printWriter.printf("%n%s%n%s%n%n", "Simple webserver written in Java 17 and Spring Boot as an asynchrounous and concurrent application made with Java Non-Blocking IO library.", "" +
+            printWriter.printf("%n%s%n%s%n%n", "Simple webserver written in Java 17 and Spring Boot as an asynchrounous and concurrent application made with Java Non-Blocking IO library.",
                     "Spring Boot modules used: Lombok, Actuator, Micrometer-Registry-Prometheus, Commons-cli`.");
             helpFormatter.printUsage(printWriter, 100, "./fastwebserver [OPTION]...");
             helpFormatter.printOptions(printWriter, 100, options, 2, 5);
