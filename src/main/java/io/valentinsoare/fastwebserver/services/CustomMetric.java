@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CustomMetric {
-    private HomeEndPointMetrics homeEndPoint;
+    private final HomeEndPointMetrics homeEndPoint;
 
     @Autowired
     public CustomMetric(HomeEndPointMetrics homeEndPoint) {
