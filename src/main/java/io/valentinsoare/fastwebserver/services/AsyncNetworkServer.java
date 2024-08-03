@@ -18,7 +18,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class AsyncNetworkServer {
-    private int connectionPort;
+    private final int connectionPort;
+
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private SelectionKey serverSocketChannelKey;
@@ -26,13 +27,12 @@ public class AsyncNetworkServer {
     private ServerSocketChannel serverSocketChannelForClientConnection;
     private SocketChannel socketChannelForClient;
 
-    private CustomMetric metricService;
+    private final CustomMetric metricService;
 
 
     public AsyncNetworkServer(int connectionPort, CustomMetric metricService) {
         this.connectionPort = connectionPort;
         this.metricService = metricService;
-
 
         try {
             serverSocketChannel = ServerSocketChannel.open();

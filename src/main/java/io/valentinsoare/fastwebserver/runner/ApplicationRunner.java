@@ -6,16 +6,22 @@ import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.util.*;
 
 @Component
 public class ApplicationRunner implements CommandLineRunner {
-    private ServerOptionsExecutionTime serverOptionsExecutionTime;
-    private CustomMetric metricService;
+    private final ServerOptionsExecutionTime serverOptionsExecutionTime;
+    private final CustomMetric metricService;
+
+    @Value("${server.port}")
+    private int actuatorPort;
 
     @Autowired
     public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, CustomMetric metricService) {
@@ -77,6 +83,16 @@ public class ApplicationRunner implements CommandLineRunner {
         return 8080;
     }
 
+    private void isPortAvailable(int givenPort) {
+        try (ServerSocket serverSocket = new ServerSocket(givenPort)) {
+            serverSocket.setReuseAddress(true);
+        } catch (IOException e) {
+            System.out.printf("%n %s %s%s%n%n", ColorOutput.FATAL.getTypeOfColor(),
+                    "Port is already used by another application!", ColorOutput.OFF_COLOR.getTypeOfColor());
+            System.exit(0);
+        }
+    }
+
     private void printHelp(Options options) {
         HelpFormatter helpFormatter = new HelpFormatter();
 
@@ -94,6 +110,10 @@ public class ApplicationRunner implements CommandLineRunner {
     }
 
     private void runTheNetworkServer(Map<String, String> givenOptions) {
+        int portForActuator = validatePortAsAnOption(String.valueOf(actuatorPort));
+
+        isPortAvailable(portForActuator);
+
         AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(givenOptions.get("port")), metricService);
         asyncNetworkServer.runServer();
     }

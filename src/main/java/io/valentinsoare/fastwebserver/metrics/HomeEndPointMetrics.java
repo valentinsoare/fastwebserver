@@ -13,9 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Component
 public class HomeEndPointMetrics {
-    private AtomicInteger http_server_requests;
-    private AtomicInteger http_server_requests_success;
-    private Timer http_server_response_time;
+    private final AtomicInteger http_server_requests;
+    private final AtomicInteger http_server_requests_success;
+    private final Timer http_server_response_time;
 
     @Autowired
     public HomeEndPointMetrics(MeterRegistry meterRegistry) {
