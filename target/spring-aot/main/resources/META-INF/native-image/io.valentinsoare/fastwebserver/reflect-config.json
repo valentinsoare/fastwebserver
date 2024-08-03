@@ -295,7 +295,7 @@
     ]
   },
   {
-    "name": "io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService",
+    "name": "io.valentinsoare.fastwebserver.metrics.HomeEndPointMetrics",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "queriedMethods": [
@@ -327,7 +327,20 @@
         "name": "<init>",
         "parameterTypes": [
           "io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime",
-          "io.valentinsoare.fastwebserver.monitoringandalterting.CustomMetricService"
+          "io.valentinsoare.fastwebserver.services.CustomMetric"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.valentinsoare.fastwebserver.services.CustomMetric",
+    "queryAllPublicMethods": true,
+    "queryAllDeclaredMethods": true,
+    "queriedMethods": [
+      {
+        "name": "<init>",
+        "parameterTypes": [
+          "io.valentinsoare.fastwebserver.metrics.HomeEndPointMetrics"
         ]
       }
     ]

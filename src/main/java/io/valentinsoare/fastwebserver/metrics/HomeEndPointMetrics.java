@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HomeEndPointMetrics {
     private AtomicInteger http_server_requests;
     private AtomicInteger http_server_requests_success;
-    private AtomicInteger http_server_requests_failure;
     private Timer http_server_response_time;
 
     @Autowired

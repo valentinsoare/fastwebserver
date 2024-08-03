@@ -1,5 +1,6 @@
 package io.valentinsoare.fastwebserver.services;
 
+import io.micrometer.core.instrument.Timer;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 
 import java.io.IOException;
@@ -105,14 +106,15 @@ public class AsyncNetworkServer {
 
                 int numberOfBytesSend = clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
-                long howLong = Duration.ofMillis(System.currentTimeMillis() - receivedTime).toMillis();
-                metricService.getHomeEndPointMetrics().getHttp_server_response_time()
-                        .record(howLong, TimeUnit.MILLISECONDS);
+                long millis = Duration.ofMillis(System.currentTimeMillis() - receivedTime).toMillis();
+                Timer t = metricService.getHomeEndPointMetrics().getHttp_server_response_time();
+
+                t.record(millis, TimeUnit.MILLISECONDS);
 
                 if (numberOfBytesSend > 0) {
                     metricService.getHomeEndPointMetrics().incrementHttpRequestsWithSuccess();
                 } else {
-                    metricService.getHomeEndPointMetrics().decrementHttpRequestsWithSuccess();
+                    metricService.getHomeEndPointMetrics().decrementHttpRequests();
                 }
 
                 buffer.clear();
