@@ -1,6 +1,6 @@
 package io.valentinsoare.fastwebserver;
 
-import io.valentinsoare.fastwebserver.auxiliary.Utils;
+import io.valentinsoare.fastwebserver.auxiliary.PortUtilities;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ public class FastWebApplication {
     public static void main(String[] args) {
         actPort = Integer.parseInt(environment.getProperty("server.port", "8181"));
 
-        if (!Utils.isPortAvailable(actPort)) {
+        if (!PortUtilities.isPortAvailable(actPort)) {
             System.out.printf("%n %sERROR: Actuator port %s is already in use. Trying to find an available port!%s%n%n",
                     ColorOutput.ERROR.getTypeOfColor(), actPort, ColorOutput.OFF_COLOR.getTypeOfColor());
 
@@ -25,7 +25,7 @@ public class FastWebApplication {
                 Thread.sleep(1);
             } catch (InterruptedException e) {}
 
-            while (!Utils.isPortAvailable(actPort)) {
+            while (!PortUtilities.isPortAvailable(actPort)) {
                 actPort++;
             }
 

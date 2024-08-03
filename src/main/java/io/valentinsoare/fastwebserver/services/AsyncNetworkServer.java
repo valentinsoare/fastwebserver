@@ -2,10 +2,8 @@ package io.valentinsoare.fastwebserver.services;
 
 import io.micrometer.core.instrument.Timer;
 import io.valentinsoare.fastwebserver.FastWebApplication;
-import io.valentinsoare.fastwebserver.auxiliary.Utils;
+import io.valentinsoare.fastwebserver.auxiliary.PortUtilities;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.StandardEnvironment;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -37,11 +35,11 @@ public class AsyncNetworkServer {
         this.connectionPort = connectionPort;
         this.metricService = metricService;
 
-        if (!Utils.isPortAvailable(connectionPort)) {
+        if (!PortUtilities.isPortAvailable(connectionPort)) {
             System.out.printf("%n %sERROR: Server port %s is already in use. Trying to find an available port!%s%n%n",
                     ColorOutput.ERROR.getTypeOfColor(), connectionPort, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-            while (!Utils.isPortAvailable(connectionPort)) {
+            while (!PortUtilities.isPortAvailable(connectionPort)) {
                 connectionPort++;
             }
         }

@@ -5,9 +5,9 @@ import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class Utils {
+public class PortUtilities {
 
-    private Utils() {}
+    private PortUtilities() {}
 
     public static int validatePortAsAnOption(String p) {
         try {

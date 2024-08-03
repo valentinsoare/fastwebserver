@@ -1,19 +1,16 @@
 package io.valentinsoare.fastwebserver.runner;
 
-import io.valentinsoare.fastwebserver.auxiliary.Utils;
+import io.valentinsoare.fastwebserver.auxiliary.PortUtilities;
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
 import io.valentinsoare.fastwebserver.services.CustomMetric;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.util.*;
 
 @Component
@@ -81,7 +78,7 @@ public class ApplicationRunner implements CommandLineRunner {
     }
 
     private void runTheNetworkServer(Map<String, String> givenOptions) {
-        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(Utils.validatePortAsAnOption(givenOptions.get("port")), metricService);
+        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(PortUtilities.validatePortAsAnOption(givenOptions.get("port")), metricService);
         asyncNetworkServer.runServer();
     }
 
