@@ -267,6 +267,10 @@
       {
         "name": "<init>",
         "parameterTypes": [ ]
+      },
+      {
+        "name": "serverFactoryCustomizer",
+        "parameterTypes": [ ]
       }
     ]
   },
@@ -9447,7 +9451,8 @@
   },
   {
     "name": "org.springframework.boot.web.server.WebServerFactoryCustomizer",
-    "queryAllPublicMethods": true
+    "queryAllPublicMethods": true,
+    "queryAllDeclaredMethods": true
   },
   {
     "name": "org.springframework.boot.web.server.WebServerFactoryCustomizerBeanPostProcessor",

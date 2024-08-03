@@ -1,5 +1,6 @@
 package io.valentinsoare.fastwebserver.runner;
 
+import io.valentinsoare.fastwebserver.auxiliary.Utils;
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
 import io.valentinsoare.fastwebserver.services.CustomMetric;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
@@ -19,9 +20,6 @@ import java.util.*;
 public class ApplicationRunner implements CommandLineRunner {
     private final ServerOptionsExecutionTime serverOptionsExecutionTime;
     private final CustomMetric metricService;
-
-    @Value("${server.port}")
-    private int actuatorPort;
 
     @Autowired
     public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, CustomMetric metricService) {
@@ -66,33 +64,6 @@ public class ApplicationRunner implements CommandLineRunner {
         return returnForOptions;
     }
 
-    private int validatePortAsAnOption(String p) {
-        try {
-            int i = Integer.parseInt(p);
-
-            if (i <= 1024 || i > 65535) {
-                throw new NumberFormatException();
-            }
-
-            return i;
-        } catch (NumberFormatException e) {
-            System.out.printf("%n %s %s%s%n%n", ColorOutput.ERROR.getTypeOfColor(),
-                    "Port should be a integer value greater than 1024. In this case it will default to 8080!", ColorOutput.OFF_COLOR.getTypeOfColor());
-        }
-
-        return 8080;
-    }
-
-    private void isPortAvailable(int givenPort) {
-        try (ServerSocket serverSocket = new ServerSocket(givenPort)) {
-            serverSocket.setReuseAddress(true);
-        } catch (IOException e) {
-            System.out.printf("%n %s %s%s%n%n", ColorOutput.FATAL.getTypeOfColor(),
-                    "Port is already used by another application!", ColorOutput.OFF_COLOR.getTypeOfColor());
-            System.exit(0);
-        }
-    }
-
     private void printHelp(Options options) {
         HelpFormatter helpFormatter = new HelpFormatter();
 
@@ -110,11 +81,7 @@ public class ApplicationRunner implements CommandLineRunner {
     }
 
     private void runTheNetworkServer(Map<String, String> givenOptions) {
-        int portForActuator = validatePortAsAnOption(String.valueOf(actuatorPort));
-
-        isPortAvailable(portForActuator);
-
-        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(validatePortAsAnOption(givenOptions.get("port")), metricService);
+        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(Utils.validatePortAsAnOption(givenOptions.get("port")), metricService);
         asyncNetworkServer.runServer();
     }
 

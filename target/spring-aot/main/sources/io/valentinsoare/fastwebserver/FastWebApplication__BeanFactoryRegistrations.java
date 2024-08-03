@@ -132,6 +132,7 @@ public class FastWebApplication__BeanFactoryRegistrations {
     beanFactory.registerBeanDefinition("formatOutput", FormatOutput__BeanDefinitions.getFormatOutputBeanDefinition());
     beanFactory.registerBeanDefinition("applicationRunner", ApplicationRunner__BeanDefinitions.getApplicationRunnerBeanDefinition());
     beanFactory.registerBeanDefinition("customMetric", CustomMetric__BeanDefinitions.getCustomMetricBeanDefinition());
+    beanFactory.registerBeanDefinition("serverFactoryCustomizer", FastWebApplication__BeanDefinitions.getServerFactoryCustomizerBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.AutoConfigurationPackages", AutoConfigurationPackages__BeanDefinitions.BasePackages.getAutoConfigurationPackagesBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration", PropertyPlaceholderAutoConfiguration__BeanDefinitions.getPropertyPlaceholderAutoConfigurationBeanDefinition());
     beanFactory.registerBeanDefinition("propertySourcesPlaceholderConfigurer", PropertyPlaceholderAutoConfiguration__BeanDefinitions.getPropertySourcesPlaceholderConfigurerBeanDefinition());

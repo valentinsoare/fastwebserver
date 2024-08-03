@@ -1,4 +1,12 @@
 io/valentinsoare/fastwebserver/runner/ApplicationRunner.class
 io/valentinsoare/fastwebserver/config/ServerOptionsExecutionTime.class
-io/valentinsoare/fastwebserver/services/AsyncNetworkServer.class
+io/valentinsoare/fastwebserver/outputformat/ColorOutput.class
+io/valentinsoare/fastwebserver/typeofoutput/successwithouterror/SuccessMessage$SuccessMessageBuilder.class
 io/valentinsoare/fastwebserver/FastWebApplication.class
+io/valentinsoare/fastwebserver/typeofoutput/exceptionsanderrors/Severity.class
+io/valentinsoare/fastwebserver/services/CustomMetric.class
+io/valentinsoare/fastwebserver/typeofoutput/successwithouterror/SuccessMessage.class
+io/valentinsoare/fastwebserver/typeofoutput/exceptionsanderrors/ErrorMessage.class
+io/valentinsoare/fastwebserver/typeofoutput/exceptionsanderrors/ErrorMessage$ErrorMessageBuilder.class
+io/valentinsoare/fastwebserver/outputformat/FormatOutput.class
+io/valentinsoare/fastwebserver/metrics/HomeEndPointMetrics.class
