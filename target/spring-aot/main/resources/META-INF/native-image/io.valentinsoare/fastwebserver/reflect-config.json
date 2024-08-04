@@ -331,13 +331,13 @@
         "name": "<init>",
         "parameterTypes": [
           "io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime",
-          "io.valentinsoare.fastwebserver.services.CustomMetric"
+          "io.valentinsoare.fastwebserver.services.MetricServices"
         ]
       }
     ]
   },
   {
-    "name": "io.valentinsoare.fastwebserver.services.CustomMetric",
+    "name": "io.valentinsoare.fastwebserver.services.CustomMetrics",
     "queryAllPublicMethods": true,
     "queryAllDeclaredMethods": true,
     "queriedMethods": [
@@ -348,6 +348,10 @@
         ]
       }
     ]
+  },
+  {
+    "name": "io.valentinsoare.fastwebserver.services.MetricServices",
+    "queryAllPublicMethods": true
   },
   {
     "name": "jakarta.inject.Inject"

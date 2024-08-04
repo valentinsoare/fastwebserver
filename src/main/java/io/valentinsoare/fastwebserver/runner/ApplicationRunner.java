@@ -87,9 +87,10 @@ public class ApplicationRunner implements CommandLineRunner {
 
     private void executeAppWithOptionsGiven(Map<String, String> givenOptions) {
         for (Map.Entry<String, String> option : givenOptions.entrySet()) {
-            switch (option.getKey()) {
-                case "help" -> printHelp(serverOptionsExecutionTime.getRequiredOptions());
-                case "port" -> runTheNetworkServer(givenOptions);
+            if (option.getKey().equals("port")) {
+                runTheNetworkServer(givenOptions);
+            } else {
+                printHelp(serverOptionsExecutionTime.getRequiredOptions());
             }
         }
     }

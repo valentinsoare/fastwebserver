@@ -4,7 +4,7 @@ import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime__BeanDef
 import io.valentinsoare.fastwebserver.metrics.HomeEndPointMetrics__BeanDefinitions;
 import io.valentinsoare.fastwebserver.outputformat.FormatOutput__BeanDefinitions;
 import io.valentinsoare.fastwebserver.runner.ApplicationRunner__BeanDefinitions;
-import io.valentinsoare.fastwebserver.services.CustomMetric__BeanDefinitions;
+import io.valentinsoare.fastwebserver.services.CustomMetrics__BeanDefinitions;
 import org.springframework.aop.framework.autoproxy.InfrastructureAdvisorAutoProxyCreator__BeanDefinitions;
 import org.springframework.aot.generate.Generated;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -131,7 +131,7 @@ public class FastWebApplication__BeanFactoryRegistrations {
     beanFactory.registerBeanDefinition("homeEndPointMetrics", HomeEndPointMetrics__BeanDefinitions.getHomeEndPointMetricsBeanDefinition());
     beanFactory.registerBeanDefinition("formatOutput", FormatOutput__BeanDefinitions.getFormatOutputBeanDefinition());
     beanFactory.registerBeanDefinition("applicationRunner", ApplicationRunner__BeanDefinitions.getApplicationRunnerBeanDefinition());
-    beanFactory.registerBeanDefinition("customMetric", CustomMetric__BeanDefinitions.getCustomMetricBeanDefinition());
+    beanFactory.registerBeanDefinition("customMetrics", CustomMetrics__BeanDefinitions.getCustomMetricsBeanDefinition());
     beanFactory.registerBeanDefinition("serverFactoryCustomizer", FastWebApplication__BeanDefinitions.getServerFactoryCustomizerBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.AutoConfigurationPackages", AutoConfigurationPackages__BeanDefinitions.BasePackages.getAutoConfigurationPackagesBeanDefinition());
     beanFactory.registerBeanDefinition("org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration", PropertyPlaceholderAutoConfiguration__BeanDefinitions.getPropertyPlaceholderAutoConfigurationBeanDefinition());

@@ -53,7 +53,5 @@ public class HomeEndPointMetrics {
     public void decrementHttpRequestsWithSuccess() {
         this.http_server_requests_success.getAndDecrement();
     }
-
-
 }
 

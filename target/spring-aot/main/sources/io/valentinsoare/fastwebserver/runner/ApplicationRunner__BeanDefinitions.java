@@ -1,7 +1,7 @@
 package io.valentinsoare.fastwebserver.runner;
 
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
-import io.valentinsoare.fastwebserver.services.CustomMetric;
+import io.valentinsoare.fastwebserver.services.MetricServices;
 import org.springframework.aot.generate.Generated;
 import org.springframework.beans.factory.aot.BeanInstanceSupplier;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -16,7 +16,7 @@ public class ApplicationRunner__BeanDefinitions {
    * Get the bean instance supplier for 'applicationRunner'.
    */
   private static BeanInstanceSupplier<ApplicationRunner> getApplicationRunnerInstanceSupplier() {
-    return BeanInstanceSupplier.<ApplicationRunner>forConstructor(ServerOptionsExecutionTime.class, CustomMetric.class)
+    return BeanInstanceSupplier.<ApplicationRunner>forConstructor(ServerOptionsExecutionTime.class, MetricServices.class)
             .withGenerator((registeredBean, args) -> new ApplicationRunner(args.get(0), args.get(1)));
   }
 
