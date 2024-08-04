@@ -5,7 +5,7 @@ import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class PortUtilities {
+public class PortUtilities extends NetworkUtilities {
 
     private PortUtilities() {}
 
@@ -33,5 +33,10 @@ public class PortUtilities {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    @Override
+    public PortUtilities getPortUtilities() {
+        return this;
     }
 }

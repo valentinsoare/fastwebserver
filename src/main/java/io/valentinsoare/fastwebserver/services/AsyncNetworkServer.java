@@ -19,16 +19,16 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class AsyncNetworkServer {
-    private final int connectionPort;
+public class AsyncNetworkServer implements NetworkServices {
+    private int connectionPort;
 
     private ServerSocketChannel serverSocketChannel;
     private Selector selector;
     private SelectionKey serverSocketChannelKey;
 
-    private final CustomMetric metricService;
+    private MetricServices metricService;
 
-    public AsyncNetworkServer(int connectionPort, CustomMetric metricService) {
+    public AsyncNetworkServer(int connectionPort, MetricServices metricService) {
         this.connectionPort = connectionPort;
         this.metricService = metricService;
 
@@ -104,7 +104,7 @@ public class AsyncNetworkServer {
                 System.out.printf("%n %sReceived request: %n%s.%s",
                         ColorOutput.SUCCESS.getTypeOfColor(), requestData, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-                metricService.getHomeEndPointMetrics().incrementHttpRequests();
+                metricService.getCustomMetrics().getHomeEndPointMetrics().incrementHttpRequests();
 
                 StringBuilder answer = new StringBuilder();
 
@@ -117,14 +117,14 @@ public class AsyncNetworkServer {
                 int numberOfBytesSend = clientChannel.write(ByteBuffer.wrap(answer.toString().getBytes(StandardCharsets.UTF_8)));
 
                 long millis = Duration.ofMillis(System.currentTimeMillis() - receivedTime).toMillis();
-                Timer t = metricService.getHomeEndPointMetrics().getHttp_server_response_time();
+                Timer t = metricService.getCustomMetrics().getHomeEndPointMetrics().getHttp_server_response_time();
 
                 t.record(millis, TimeUnit.MILLISECONDS);
 
                 if (numberOfBytesSend > 0) {
-                    metricService.getHomeEndPointMetrics().incrementHttpRequestsWithSuccess();
+                    metricService.getCustomMetrics().getHomeEndPointMetrics().incrementHttpRequestsWithSuccess();
                 } else {
-                    metricService.getHomeEndPointMetrics().decrementHttpRequests();
+                    metricService.getCustomMetrics().getHomeEndPointMetrics().decrementHttpRequests();
                 }
 
                 buffer.clear();
@@ -163,5 +163,10 @@ public class AsyncNetworkServer {
             System.err.printf("%n %sERROR: Failed to close resources. %s.%s%n%n",
                     ColorOutput.ERROR.getTypeOfColor(), e.getMessage(), ColorOutput.OFF_COLOR.getTypeOfColor());
         }
+    }
+
+    @Override
+    public AsyncNetworkServer getAsyncNetworkServer() {
+        return this;
     }
 }

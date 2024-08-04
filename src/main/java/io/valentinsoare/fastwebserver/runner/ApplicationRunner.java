@@ -2,9 +2,10 @@ package io.valentinsoare.fastwebserver.runner;
 
 import io.valentinsoare.fastwebserver.auxiliary.PortUtilities;
 import io.valentinsoare.fastwebserver.config.ServerOptionsExecutionTime;
-import io.valentinsoare.fastwebserver.services.CustomMetric;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import io.valentinsoare.fastwebserver.services.AsyncNetworkServer;
+import io.valentinsoare.fastwebserver.services.MetricServices;
+import io.valentinsoare.fastwebserver.services.NetworkServices;
 import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,10 +19,10 @@ import java.util.List;
 @Component
 public class ApplicationRunner implements CommandLineRunner {
     private final ServerOptionsExecutionTime serverOptionsExecutionTime;
-    private final CustomMetric metricService;
+    private final MetricServices metricService;
 
     @Autowired
-    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, CustomMetric metricService) {
+    public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, MetricServices metricService) {
         this.serverOptionsExecutionTime = serverOptionsExecutionTime;
         this.metricService = metricService;
     }
@@ -80,8 +81,8 @@ public class ApplicationRunner implements CommandLineRunner {
     }
 
     private void runTheNetworkServer(Map<String, String> givenOptions) {
-        AsyncNetworkServer asyncNetworkServer = new AsyncNetworkServer(PortUtilities.validatePortAsAnOption(givenOptions.get("port")), metricService);
-        asyncNetworkServer.runServer();
+        NetworkServices asyncNetworkServer = new AsyncNetworkServer(PortUtilities.validatePortAsAnOption(givenOptions.get("port")), metricService);
+        asyncNetworkServer.getAsyncNetworkServer().runServer();
     }
 
     private void executeAppWithOptionsGiven(Map<String, String> givenOptions) {

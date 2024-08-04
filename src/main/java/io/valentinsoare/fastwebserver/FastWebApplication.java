@@ -12,8 +12,8 @@ import org.springframework.core.env.StandardEnvironment;
 
 @SpringBootApplication
 public class FastWebApplication {
+    public static int actuatorPort;
     public static final StandardEnvironment environment = new StandardEnvironment();
-    public static int actuatorPort = 0;
 
     static {
         actuatorPort = Integer.parseInt(environment.getProperty("server.port", "8181"));
@@ -39,8 +39,8 @@ public class FastWebApplication {
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> serverFactoryCustomizer() {
         return factory -> {
-            int port = Integer.parseInt(System.getProperty("server.port", "8181"));
-            factory.setPort(port);
+            int newActuatorPort = Integer.parseInt(System.getProperty("server.port", "8181"));
+            factory.setPort(newActuatorPort);
         };
     }
 }
