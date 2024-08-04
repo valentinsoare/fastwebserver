@@ -9,9 +9,11 @@ import org.apache.commons.cli.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import sun.misc.Signal;
 
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.List;
 
 @Component
 public class ApplicationRunner implements CommandLineRunner {
@@ -91,8 +93,21 @@ public class ApplicationRunner implements CommandLineRunner {
         }
     }
 
+    private void handleForceClose() {
+        Signal.handle(new Signal("INT"),
+                signal -> {
+                    System.out.printf("%n%n %s %s%s%n%n",
+                            ColorOutput.SUCCESS.getTypeOfColor(), "Exiting...!", ColorOutput.OFF_COLOR.getTypeOfColor());
+
+                    System.out.print("\u001B[?25h");
+                    System.exit(0);
+                });
+    }
+
     @Override
     public void run(String... args) {
+        handleForceClose();
+
         Map<String, String> optionsToBeUsedOnServer = extractOptionsFromUserInput(args);
         executeAppWithOptionsGiven(optionsToBeUsedOnServer);
     }

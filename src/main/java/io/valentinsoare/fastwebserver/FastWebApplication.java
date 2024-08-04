@@ -9,27 +9,28 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.StandardEnvironment;
 
+
 @SpringBootApplication
 public class FastWebApplication {
-    public static StandardEnvironment environment = new StandardEnvironment();
-    public static int actPort = 0;
+    public static final StandardEnvironment environment = new StandardEnvironment();
+    public static int actuatorPort = 0;
+
+    static {
+        actuatorPort = Integer.parseInt(environment.getProperty("server.port", "8181"));
+    }
 
     public static void main(String[] args) {
-        actPort = Integer.parseInt(environment.getProperty("server.port", "8181"));
+        System.out.print("\u001B[?25l");
 
-        if (!PortUtilities.isPortAvailable(actPort)) {
+        if (!PortUtilities.isPortAvailable(actuatorPort)) {
             System.out.printf("%n %sERROR: Actuator port %s is already in use. Trying to find an available port!%s%n%n",
-                    ColorOutput.ERROR.getTypeOfColor(), actPort, ColorOutput.OFF_COLOR.getTypeOfColor());
+                    ColorOutput.ERROR.getTypeOfColor(), actuatorPort, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {}
-
-            while (!PortUtilities.isPortAvailable(actPort)) {
-                actPort++;
+            while (!PortUtilities.isPortAvailable(actuatorPort)) {
+                actuatorPort++;
             }
 
-            System.setProperty("server.port", String.valueOf(actPort));
+            System.setProperty("server.port", String.valueOf(actuatorPort));
         }
 
         SpringApplication.run(FastWebApplication.class, args);

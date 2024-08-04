@@ -26,9 +26,6 @@ public class AsyncNetworkServer {
     private Selector selector;
     private SelectionKey serverSocketChannelKey;
 
-    private ServerSocketChannel serverSocketChannelForClientConnection;
-    private SocketChannel socketChannelForClient;
-
     private final CustomMetric metricService;
 
     public AsyncNetworkServer(int connectionPort, CustomMetric metricService) {
@@ -57,7 +54,7 @@ public class AsyncNetworkServer {
 
             serverSocketChannelKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
             System.out.printf(" %sServer started on port %s with actuator port %s...%s",
-                    ColorOutput.SUCCESS.getTypeOfColor(), connectionPort, FastWebApplication.actPort, ColorOutput.OFF_COLOR.getTypeOfColor());
+                    ColorOutput.SUCCESS.getTypeOfColor(), connectionPort, FastWebApplication.actuatorPort, ColorOutput.OFF_COLOR.getTypeOfColor());
         } catch (IOException e) {
             System.out.printf("%n%s ERROR: Issues in the init phase of the web server. %s.%n%n%s",
                     ColorOutput.ERROR.getTypeOfColor(), e.getMessage(), ColorOutput.OFF_COLOR.getTypeOfColor());
@@ -66,6 +63,9 @@ public class AsyncNetworkServer {
     }
 
     private void workOnRequest(Iterator<SelectionKey> keyIterator) throws IOException {
+        ServerSocketChannel serverSocketChannelForClientConnection;
+        SocketChannel socketChannelForClient;
+
         while (keyIterator.hasNext()) {
             SelectionKey key = keyIterator.next();
             keyIterator.remove();
