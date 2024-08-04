@@ -1,10 +1,11 @@
 package io.valentinsoare.fastwebserver.config;
 
+import lombok.Getter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.springframework.stereotype.Service;
 
-
+@Getter
 @Service
 public class ServerOptionsExecutionTime {
     private Options requiredOptions;
@@ -29,9 +30,5 @@ public class ServerOptionsExecutionTime {
 
         requiredOptions.addOption(port)
                 .addOption(help);
-    }
-
-    public Options getRequiredOptions() {
-        return requiredOptions;
     }
 }
