@@ -20,11 +20,13 @@ import java.util.List;
 public class ApplicationRunner implements CommandLineRunner {
     private final ServerOptionsExecutionTime serverOptionsExecutionTime;
     private final MetricServices metricService;
+    private PortUtilities portUtilities;
 
     @Autowired
     public ApplicationRunner(ServerOptionsExecutionTime serverOptionsExecutionTime, MetricServices metricService) {
         this.serverOptionsExecutionTime = serverOptionsExecutionTime;
         this.metricService = metricService;
+        this.portUtilities = PortUtilities.getPortUtilities();
     }
 
     private Map<String, String> extractOptionsFromUserInput(String[] arguments) {
@@ -81,7 +83,7 @@ public class ApplicationRunner implements CommandLineRunner {
     }
 
     private void runTheNetworkServer(Map<String, String> givenOptions) {
-        NetworkServices asyncNetworkServer = new AsyncNetworkServer(PortUtilities.validatePortAsAnOption(givenOptions.get("port")), metricService);
+        NetworkServices asyncNetworkServer = new AsyncNetworkServer(PortUtilities.getPortUtilities().validatePortAsAnOption(givenOptions.get("port")), metricService);
         asyncNetworkServer.getAsyncNetworkServer().runServer();
     }
 

@@ -14,19 +14,21 @@ import org.springframework.core.env.StandardEnvironment;
 public class FastWebApplication {
     public static int actuatorPort;
     public static final StandardEnvironment environment = new StandardEnvironment();
+    public static PortUtilities portUtilities;
 
     static {
         actuatorPort = Integer.parseInt(environment.getProperty("server.port", "8181"));
+        portUtilities = PortUtilities.getPortUtilities();
     }
 
     public static void main(String[] args) {
         System.out.print("\u001B[?25l");
 
-        if (!PortUtilities.isPortAvailable(actuatorPort)) {
+        if (!portUtilities.isPortAvailable(actuatorPort)) {
             System.out.printf("%n %sERROR: Actuator port %s is already in use. Trying to find an available port!%s%n%n",
                     ColorOutput.ERROR.getTypeOfColor(), actuatorPort, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-            while (!PortUtilities.isPortAvailable(actuatorPort)) {
+            while (!portUtilities.isPortAvailable(actuatorPort)) {
                 actuatorPort++;
             }
 

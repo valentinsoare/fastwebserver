@@ -287,6 +287,14 @@
     ]
   },
   {
+    "name": "io.valentinsoare.fastwebserver.FastWebApplication$$SpringCGLIB$$FastClass$$0",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.valentinsoare.fastwebserver.FastWebApplication$$SpringCGLIB$$FastClass$$1",
+    "allDeclaredConstructors": true
+  },
+  {
     "name": "io.valentinsoare.fastwebserver.FastWebApplication__ApplicationContextInitializer",
     "condition": {
       "typeReachable": "io.valentinsoare.fastwebserver.FastWebApplication"

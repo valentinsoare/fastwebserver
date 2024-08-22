@@ -5,11 +5,13 @@ import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class PortUtilities implements NetworkUtilities {
+public class PortUtilities {
 
-    public PortUtilities() {}
+    private static PortUtilities portUtilities;
 
-    public static int validatePortAsAnOption(String p) {
+    private PortUtilities() {}
+
+    public int validatePortAsAnOption(String p) {
         try {
             int i = Integer.parseInt(p);
 
@@ -26,7 +28,7 @@ public class PortUtilities implements NetworkUtilities {
         return 8080;
     }
 
-    public static boolean isPortAvailable(int port) {
+    public boolean isPortAvailable(int port) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             serverSocket.setReuseAddress(true);
             return true;
@@ -35,8 +37,11 @@ public class PortUtilities implements NetworkUtilities {
         }
     }
 
-    @Override
-    public PortUtilities getPortUtilities() {
-        return this;
+    public static PortUtilities getPortUtilities() {
+        if (portUtilities == null) {
+            portUtilities = new PortUtilities();
+        }
+
+        return portUtilities;
     }
 }

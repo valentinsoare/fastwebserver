@@ -5,6 +5,7 @@ import io.valentinsoare.fastwebserver.FastWebApplication;
 import io.valentinsoare.fastwebserver.auxiliary.PortUtilities;
 import io.valentinsoare.fastwebserver.outputformat.ColorOutput;
 
+import javax.sound.sampled.Port;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
@@ -27,16 +28,18 @@ public class AsyncNetworkServer implements NetworkServices {
     private SelectionKey serverSocketChannelKey;
 
     private MetricServices metricService;
+    private PortUtilities portUtilities;
 
     public AsyncNetworkServer(int connectionPort, MetricServices metricService) {
         this.connectionPort = connectionPort;
         this.metricService = metricService;
+        this.portUtilities = PortUtilities.getPortUtilities();
 
-        if (!PortUtilities.isPortAvailable(connectionPort)) {
+        if (!portUtilities.isPortAvailable(connectionPort)) {
             System.out.printf("%n %sERROR: Server port %s is already in use. Trying to find an available port!%s%n%n",
                     ColorOutput.ERROR.getTypeOfColor(), connectionPort, ColorOutput.OFF_COLOR.getTypeOfColor());
 
-            while (!PortUtilities.isPortAvailable(connectionPort)) {
+            while (!portUtilities.isPortAvailable(connectionPort)) {
                 connectionPort++;
             }
         }
